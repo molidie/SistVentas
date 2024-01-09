@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -32,6 +32,13 @@
             <h5 class="mb-0">Alta de Vendedor</h5>
         </div>
         <div class="card-body">
+            <!-- Mostrar mensaje de error -->
+            <!-- Mostrar mensaje de error con un pequeño margen superior -->
+            <div th:if="${errorMessage != null}" class="alert alert-danger mt-3" role="alert">
+                <p th:text="${errorMessage}"></p>
+            </div>
+
+
             <form th:action="@{/vendedor}" th:object="${vendedor}" method="post">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>

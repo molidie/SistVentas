@@ -1,15 +1,13 @@
 package ar.edu.unnoba.ssaaii.SistVentas.controller;
 
+import ar.edu.unnoba.ssaaii.SistVentas.exeption.DuplicateEmailException;
 import ar.edu.unnoba.ssaaii.SistVentas.model.Vendedor;
 import ar.edu.unnoba.ssaaii.SistVentas.service.IVendedorService;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,16 +23,22 @@ public class VendedorController {
     }
 
     @GetMapping("/new")
-    public String nuevoVendedor(Model model){
-        model.addAttribute("vendedor",new Vendedor());
+    public String nuevoVendedor(Model model, @RequestParam(name = "error", required = false) String errorMessage) {
+        model.addAttribute("vendedor", new Vendedor());
+        model.addAttribute("errorMessage", errorMessage);
         return "/Home/Vendedor/newVendedor";
     }
 
     @PostMapping
-    public String crearVendedor(Vendedor vendedor){
-        vendedorService.create(vendedor);
-        return "redirect:/vendedor/listado";
+    public String crearVendedor(Vendedor vendedor, Model model) {
+        try {
+            vendedorService.create(vendedor);
+            return "redirect:/vendedor/listado";
+        } catch (DuplicateEmailException ex) {
+            return "redirect:/vendedor/new?error=Correo+electronico+ya+existente"; // dejamos este mensaje se puede agregar el de DuplicateEmailException pero hay que trabajarolo con el front
+        }
     }
+
 
     @GetMapping("/listado")
     public String listarVendedores(Model model) {

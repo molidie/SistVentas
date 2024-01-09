@@ -1,5 +1,7 @@
 package ar.edu.unnoba.ssaaii.SistVentas.service;
 
+import ar.edu.unnoba.ssaaii.SistVentas.exeption.DuplicateEmailException;
+import ar.edu.unnoba.ssaaii.SistVentas.exeption.NotFoundException;
 import ar.edu.unnoba.ssaaii.SistVentas.model.Vendedor;
 import ar.edu.unnoba.ssaaii.SistVentas.repository.VendedorRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VendedorServiceImp implements IVendedorService, UserDetailsService {
@@ -19,15 +20,18 @@ public class VendedorServiceImp implements IVendedorService, UserDetailsService 
     }
 
     @Override
-    public Vendedor create(Vendedor vendedor) {
-        List<Vendedor> vendedores = vendedorRepository.findAll();
-        for(Vendedor v : vendedores){
-            if(v.getId().equals(vendedor.getId())){ //lo podriamos cambiar
-                return null; //hagamosle un try catch
-            }
-        }
+    public Vendedor create(Vendedor vendedor) throws DuplicateEmailException {
+        checkIfEmailExists(vendedor.getMail());
         vendedorRepository.save(vendedor);
         return vendedor;
+    }
+
+
+    private void checkIfEmailExists(String email) {
+        List<Vendedor> vendedores = vendedorRepository.findByMail(email);
+        if (!vendedores.isEmpty()) {
+            throw new DuplicateEmailException("Correo electronico ya existente en la base de datos: ");
+        }
     }
 
     @Override

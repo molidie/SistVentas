@@ -23,29 +23,37 @@
 <body>
 
 <div class="container">
-    <h2>Listado de Vendedores</h2>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Correo Electrónico</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="vendedor : ${vendedores}">
-            <td th:text="${vendedor.nombre}"></td>
-            <td th:text="${vendedor.apellido}"></td>
-            <td th:text="${vendedor.mail}"></td>
-            <td>
-                <a th:href="@{'/vendedor/detalles/' + ${vendedor.id}}" class="btn btn-info btn-sm">Detalles</a>
-                <a th:href="@{'/vendedor/eliminar/' + ${vendedor.id}}" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <div class="float-right">
+                <a th:href="@{/vendedor/new}" class="btn btn-primary btn-sm">Crear Vendedor</a>
+            </div>
+            <h5 class="mb-0">Listado de Vendedores</h5>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo Electrónico</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="vendedor : ${vendedores}">
+                    <td th:text="${vendedor.nombre}"></td>
+                    <td th:text="${vendedor.apellido}"></td>
+                    <td th:text="${vendedor.mail}"></td>
+                    <td>
+                        <a th:href="@{'/vendedor/detalles/' + ${vendedor.id}}" class="btn btn-info btn-sm">Detalles</a>
+                        <a th:href="@{'/vendedor/eliminar/' + ${vendedor.id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
