@@ -17,6 +17,15 @@ public class Vendedor implements UserDetails{
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "apellido")
+    private String apellido;
+
+    @Column(name = "mail")
+    private String mail;
+
+    @Column(name = "contraseña")
+    private String contraseña;
+
     @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL)
     private Set<Venta> ventas;
 
@@ -37,6 +46,30 @@ public class Vendedor implements UserDetails{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
     public Set<Venta> getVentas() {

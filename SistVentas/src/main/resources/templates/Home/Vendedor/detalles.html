@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Detalles del Vendedor</title>
+  <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    /* Puedes agregar estilos personalizados aquí si es necesario */
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Detalles del Vendedor</h2>
+
+  <div th:if="${vendedor != null}">
+    <dl class="row">
+      <dt class="col-sm-3">Nombre:</dt>
+      <dd class="col-sm-9" th:text="${vendedor.nombre}"></dd>
+
+      <dt class="col-sm-3">Apellido:</dt>
+      <dd class="col-sm-9" th:text="${vendedor.apellido}"></dd>
+
+      <dt class="col-sm-3">Correo Electrónico:</dt>
+      <dd class="col-sm-9" th:text="${vendedor.mail}"></dd>
+    </dl>
+  </div>
+
+  <div th:if="${vendedor == null}">
+    <p class="text-danger">ID del vendedor no existente.</p>
+  </div>
+
+  <a th:href="@{/vendedor/listado}" class="btn btn-primary">Volver al Listado</a>
+</div>
+
+
+<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

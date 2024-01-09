@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Alta de Vendedor</title>
+    <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* Puedes agregar estilos personalizados aquí si es necesario */
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            margin: 0 auto; /* Centra el card en la página */
+            max-width: 400px; /* Establece el ancho máximo del card */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Alta de Vendedor</h5>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/vendedor}" th:object="${vendedor}" method="post">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" placeholder="Ingrese su nombre">
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" class="form-control" th:field="*{apellido}" placeholder="Ingrese su apellido">
+                </div>
+                <div class="form-group">
+                    <label for="mail">Correo Electrónico</label>
+                    <input type="email" class="form-control" th:field="*{mail}" placeholder="Ingrese su correo electrónico">
+                </div>
+                <div class="form-group">
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" class="form-control" th:field="*{contraseña}" placeholder="Ingrese su contraseña">
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
