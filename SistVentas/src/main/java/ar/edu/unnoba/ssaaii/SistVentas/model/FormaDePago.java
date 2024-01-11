@@ -13,8 +13,9 @@ public class FormaDePago implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tipos",nullable = false)
-    private String tipo; //seguro lo cambio a Enum
+    @Column(name = "tipo")
+    @Enumerated(EnumType.STRING)
+    private TipoPago tipo;
 
 
     @OneToMany(mappedBy = "formaDePago", cascade = CascadeType.ALL)
@@ -33,11 +34,11 @@ public class FormaDePago implements UserDetails {
         this.id = id;
     }
 
-    public String getTipo() {
+    public TipoPago getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoPago tipo) {
         this.tipo = tipo;
     }
 

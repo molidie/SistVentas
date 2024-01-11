@@ -14,7 +14,9 @@ public class VentaArticulo implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "monto")
     private Double monto;
+    @Column(name = "cantidad")
     private Integer cantidad;
 
     @ManyToOne
@@ -67,6 +69,8 @@ public class VentaArticulo implements UserDetails {
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
     }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,5 +1,6 @@
 package ar.edu.unnoba.ssaaii.SistVentas.service;
 
+import ar.edu.unnoba.ssaaii.SistVentas.exeption.NotFoundException;
 import ar.edu.unnoba.ssaaii.SistVentas.model.Articulo;
 import ar.edu.unnoba.ssaaii.SistVentas.repository.ArticuloRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,12 +20,7 @@ public class ArticuloServiceImp implements IArticuloService, UserDetailsService 
 
     @Override
     public Articulo create(Articulo articulo) { //por ahi lo podemos hacer por codigo de barra en vez de nombre
-        List<Articulo> articulos = getAll();
-        for (Articulo a : articulos){
-            if (articulo.getNombre().equals(a.getNombre())){
-                return a;
-            }
-        }
+
         articuloRepository.save(articulo);
         return articulo;
     }
@@ -38,6 +34,15 @@ public class ArticuloServiceImp implements IArticuloService, UserDetailsService 
     public void delete(Long id) {
         articuloRepository.deleteById(id);
 
+    }
+
+    @Override
+    public Articulo busquedaPorId(Long id) {
+        try {
+            return articuloRepository.findById(id).orElseThrow(() -> new NotFoundException("Vendedor no encontrado con ID: " + id));
+        } catch (NotFoundException ex) {
+            return null;
+        }
     }
 
     @Override

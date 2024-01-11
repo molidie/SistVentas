@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Editar Artículo</title>
+    <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* Puedes agregar estilos personalizados aquí si es necesario */
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h4 class="mt-4">Editar Artículo</h4>
+
+    <!-- Formulario para editar un artículo existente -->
+    <form th:action="@{/articulos/editarArt/{idE}(idE=${articulo.id})}" th:object="${articulo}" method="post">
+        <!-- Resto del formulario -->
+
+    <input type="hidden" th:field="*{id}"/>
+
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" placeholder="Nombre del artículo" required>
+        </div>
+        <div class="form-group">
+            <label for="precio">Precio</label>
+            <input type="number" class="form-control" id="precio" th:field="*{precio}" placeholder="Precio del artículo" required>
+        </div>
+        <div class="form-group">
+            <label for="stock">Stock</label>
+            <input type="number" class="form-control" id="stock" th:field="*{stock}" placeholder="Stock del artículo" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</div>
+
+<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

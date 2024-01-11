@@ -17,6 +17,12 @@ public class Articulo implements UserDetails {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "precio")
+    private double precio;
+
+    @Column(name = "stock")
+    private int stock;
+
     @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL)
     private Set<VentaArticulo> ventaArticulos;
 
@@ -45,6 +51,22 @@ public class Articulo implements UserDetails {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     @Override

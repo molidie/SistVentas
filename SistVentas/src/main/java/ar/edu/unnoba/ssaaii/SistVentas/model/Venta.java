@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Set;
 
@@ -14,6 +15,12 @@ public class Venta implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "fecha")
+    private LocalDate fecha;
+
+    @Column (name = "descripcion")
+    private String descripcion;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     private Set<VentaArticulo> ventaArticulos;

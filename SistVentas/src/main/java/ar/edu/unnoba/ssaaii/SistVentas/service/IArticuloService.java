@@ -11,4 +11,6 @@ public interface IArticuloService {
     public Articulo create(Articulo articulo);
     public List<Articulo> getAll();
     public void delete(Long id);
+
+    Articulo busquedaPorId(Long id);
 }

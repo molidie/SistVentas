@@ -13,6 +13,7 @@ public class VentaFormaPago implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "monto")
     private Double monto;
 
     @ManyToOne
