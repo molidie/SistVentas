@@ -10,4 +10,6 @@ public interface IClienteService {
     public Cliente create(Cliente cliente);
     public List<Cliente> getAll();
     public void delete(Long id);
+
+    Cliente busquedaPorId(Long id);
 }

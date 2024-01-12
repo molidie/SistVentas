@@ -1,6 +1,6 @@
 package ar.edu.unnoba.ssaaii.SistVentas.service;
 
-import ar.edu.unnoba.ssaaii.SistVentas.model.Articulo;
+import ar.edu.unnoba.ssaaii.SistVentas.exeption.NotFoundException;
 import ar.edu.unnoba.ssaaii.SistVentas.model.Cliente;
 import ar.edu.unnoba.ssaaii.SistVentas.repository.ClienteRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,13 +19,7 @@ public class ClienteServiceImp implements IClienteService, UserDetailsService {
     }
 
     @Override
-    public Cliente create(Cliente cliente) {
-        List<Cliente> clientes = getAll();
-        for (Cliente c : clientes){
-            if (cliente.getId().equals(c.getId())){
-                return c;
-            }
-        }
+    public Cliente create(Cliente cliente) { //deberiamos tener alguna restricion creo
         clienteRepository.save(cliente);
         return cliente;
     }
@@ -43,5 +37,13 @@ public class ClienteServiceImp implements IClienteService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
+    }
+    @Override
+    public Cliente busquedaPorId(Long id) {
+        try {
+            return clienteRepository.findById(id).orElseThrow(() -> new NotFoundException("Vendedor no encontrado con ID: " + id));
+        } catch (NotFoundException ex) {
+            return null;
+        }
     }
 }
