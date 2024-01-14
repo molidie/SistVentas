@@ -80,6 +80,24 @@ public class Venta implements UserDetails {
         this.vendedor = vendedor;
     }
 
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }

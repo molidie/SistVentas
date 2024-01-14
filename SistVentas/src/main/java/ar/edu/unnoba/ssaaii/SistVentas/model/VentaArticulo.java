@@ -15,9 +15,9 @@ public class VentaArticulo implements UserDetails {
     private Long id;
 
     @Column(name = "monto")
-    private Double monto;
+    private float monto;
     @Column(name = "cantidad")
-    private Integer cantidad;
+    private int cantidad;
 
     @ManyToOne
     @JoinColumn(name = "venta_id")
@@ -38,19 +38,19 @@ public class VentaArticulo implements UserDetails {
         this.id = id;
     }
 
-    public Double getMonto() {
+    public float getMonto() {
         return monto;
     }
 
-    public void setMonto(Double monto) {
+    public void setMonto(float monto) {
         this.monto = monto;
     }
 
-    public Integer getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(Integer cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 

@@ -18,7 +18,7 @@ public class Articulo implements UserDetails {
     private String nombre;
 
     @Column(name = "precio")
-    private double precio;
+    private float precio;
 
     @Column(name = "stock")
     private int stock;
@@ -53,11 +53,11 @@ public class Articulo implements UserDetails {
         this.nombre = nombre;
     }
 
-    public double getPrecio() {
+    public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 

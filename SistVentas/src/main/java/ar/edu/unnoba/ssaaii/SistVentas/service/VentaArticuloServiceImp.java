@@ -38,4 +38,5 @@ public class VentaArticuloServiceImp implements IVentaArticuloService, UserDetai
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
+
 }

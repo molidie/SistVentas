@@ -53,6 +53,8 @@ public class VendedorServiceImp implements IVendedorService, UserDetailsService 
     }
 
 
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;

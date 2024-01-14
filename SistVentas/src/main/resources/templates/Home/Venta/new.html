@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nueva Venta</title>
+    <!-- ESTE HTML SE VA A ELIMINAR, USAMOS EL DE HOME/VENTARTICULO/NEW -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* Puedes agregar estilos personalizados aquí si es necesario */
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Nombre</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/articulos/new">Artículos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/vendedor/listado">Vendedores</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/clientes/new">Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/ventaArticulo/new">Ventas</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h4 class="mt-4">Nueva Venta</h4>
+
+    <!-- Formulario para crear una nueva venta -->
+    <form th:action="@{/venta}" th:object="${venta}" method="post">
+        <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="date" class="form-control" id="fecha" th:field="*{fecha}" required>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <input type="text" class="form-control" id="descripcion" th:field="*{descripcion}" required>
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="cliente">Cliente</label>
+            <select class="form-control" id="cliente" th:field="*{cliente.id}" required>
+                <!-- Aquí debes incluir las opciones de clientes desde la base de datos -->
+                <option th:each="cliente : ${listaClientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="vendedor">Vendedor</label>
+            <select class="form-control" id="vendedor" th:field="*{vendedor.id}" required>
+                <!-- Aquí debes incluir las opciones de vendedores desde la base de datos -->
+                <option th:each="vendedor : ${listaVendedores}" th:value="${vendedor.id}" th:text="${vendedor.nombre}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="formaPago">Forma de Pago</label>
+            <select class="form-control" id="formaPago" th:field="*{ventaFormasPago}" multiple="multiple" required>
+                <!-- Aquí debes incluir las opciones de formas de pago desde la base de datos -->
+                <option th:each="formaPago : ${listaFormasPago}" th:value="${formaPago.id}" th:text="${formaPago.tipo}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="articulo">Artículo</label>
+            <select class="form-control" id="articulo" th:field="*{ventaArticulos}" multiple="multiple" required>
+                <!-- Aquí debes incluir las opciones de artículos desde la base de datos -->
+                 <option th:each="articulo : ${listaArticulos}" th:value="${articulo.id}" th:text="${articulo.nombre}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+
+</div>
+
+
+
+<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

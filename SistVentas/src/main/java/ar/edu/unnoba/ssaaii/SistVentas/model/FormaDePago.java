@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,8 +15,7 @@ public class FormaDePago implements UserDetails {
     private Long id;
 
     @Column(name = "tipo")
-    @Enumerated(EnumType.STRING)
-    private TipoPago tipo;
+    private String tipo;
 
 
     @OneToMany(mappedBy = "formaDePago", cascade = CascadeType.ALL)
@@ -26,6 +26,14 @@ public class FormaDePago implements UserDetails {
 
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public Long getId() {
         return id;
     }
@@ -34,13 +42,7 @@ public class FormaDePago implements UserDetails {
         this.id = id;
     }
 
-    public TipoPago getTipo() {
-        return tipo;
-    }
 
-    public void setTipo(TipoPago tipo) {
-        this.tipo = tipo;
-    }
 
     public Set<VentaFormaPago> getVentaFormasPago() {
         return ventaFormasPago;
