@@ -1,6 +1,7 @@
 package ar.edu.unnoba.ssaaii.SistVentas.service;
 
 import ar.edu.unnoba.ssaaii.SistVentas.exeption.NotFoundException;
+import ar.edu.unnoba.ssaaii.SistVentas.model.Articulo;
 import ar.edu.unnoba.ssaaii.SistVentas.model.Cliente;
 import ar.edu.unnoba.ssaaii.SistVentas.repository.ClienteRepository;
 import org.springframework.security.core.userdetails.UserDetails;

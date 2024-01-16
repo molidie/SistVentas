@@ -13,12 +13,33 @@ public class VentaFormaPago implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nombre")
+    private String nombre;
+
     @Column(name = "monto")
-    private Double monto;
+    private float monto;
 
     @ManyToOne
     @JoinColumn(name = "venta_id")
     private Venta venta;
+
+    @Column(name = "cuotas")
+    private int cuotas;
+
+    @Column(name="recargo")
+    private float recargo;
+
+    @Column(name = "descuento")
+    private float descuento;
+
+    @Column(name = "cuotas_chk")
+    private boolean cuotas_chk;
+
+    @Column(name="recargo_chk")
+    private boolean recargo_chk;
+
+    @Column(name = "descuento_chk")
+    private boolean descuento_chk;
 
     @ManyToOne
     @JoinColumn(name = "forma_pago_id")
@@ -35,11 +56,11 @@ public class VentaFormaPago implements UserDetails {
         this.id = id;
     }
 
-    public Double getMonto() {
+    public float getMonto() {
         return monto;
     }
 
-    public void setMonto(Double monto) {
+    public void setMonto(float monto) {
         this.monto = monto;
     }
 
@@ -57,6 +78,54 @@ public class VentaFormaPago implements UserDetails {
 
     public void setFormaDePago(FormaDePago formaDePago) {
         this.formaDePago = formaDePago;
+    }
+
+    public int getCuotas() {
+        return cuotas;
+    }
+
+    public void setCuotas(int cuotas) {
+        this.cuotas = cuotas;
+    }
+
+    public float getRecargo() {
+        return recargo;
+    }
+
+    public void setRecargo(float recargo) {
+        this.recargo = recargo;
+    }
+
+    public float getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(float descuento) {
+        this.descuento = descuento;
+    }
+
+    public boolean isCuotas_chk() {
+        return cuotas_chk;
+    }
+
+    public void setCuotas_chk(boolean cuotas_chk) {
+        this.cuotas_chk = cuotas_chk;
+    }
+
+    public boolean isRecargo_chk() {
+        return recargo_chk;
+    }
+
+    public void setRecargo_chk(boolean recargo_chk) {
+        this.recargo_chk = recargo_chk;
+    }
+
+    public boolean isDescuento_chk() {
+        return descuento_chk;
+    }
+
+    public void setDescuento_chk(boolean descuento_chk) {
+        this.descuento_chk = descuento_chk;
     }
 
     @Override

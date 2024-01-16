@@ -32,9 +32,19 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item active">
+            <!-- Este bloque se mostrará solo si navbarIndicator es verdadero -->
+            <li th:if="${navbarIndicator}" class="nav-item active" style="position: relative;">
+                <a class="nav-link" href="/articulos/new">Artículos</a>
+                <div style="position: absolute; top: 50%; right: 0; transform: translate(0, -50%); background-color: red; width: 5px; height: 5px; border-radius: 50%;">
+                </div>
+            </li>
+
+            <!-- Este bloque se mostrará solo si navbarIndicator es falso -->
+            <li th:unless="${navbarIndicator}" class="nav-item active">
                 <a class="nav-link" href="/articulos/new">Artículos</a>
             </li>
+
+
             <li class="nav-item">
                 <a class="nav-link" href="/vendedor/listado">Vendedores</a>
             </li>

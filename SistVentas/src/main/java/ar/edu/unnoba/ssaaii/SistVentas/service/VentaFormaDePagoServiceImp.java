@@ -32,6 +32,8 @@ public class VentaFormaDePagoServiceImp implements IVentaFormaDePagoService, Use
         ventaFormaDePagoRepository.deleteById(id);
     }
 
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;

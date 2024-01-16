@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/articulos")
 public class ArticuloController {
@@ -17,12 +19,21 @@ public class ArticuloController {
         this.articuloService = articuloService;
     }
 
-    @GetMapping("/new")
-    public String nuevoArticulo(Model model){
-        model.addAttribute("art",new Articulo());
-        model.addAttribute("listaArticulos",articuloService.getAll());
-        return "/Home/Articulo/newArt";
-    }
+@GetMapping("/new")
+public String nuevoArticulo(Model model) {
+    Articulo articulo = new Articulo();
+    List<Articulo> articulos = articuloService.getAll();
+
+    boolean hayErrorLimiteStock = articulos.stream().anyMatch(a -> a.getStock() <= a.getStock_min());
+
+    model.addAttribute("art", articulo);
+    model.addAttribute("listaArticulos", articulos);
+    model.addAttribute("errorlimitestock", hayErrorLimiteStock);
+    model.addAttribute("navbarIndicator", hayErrorLimiteStock);
+
+    return "/Home/Articulo/newArt";
+}
+
 
     @PostMapping
     public String create(Articulo articulo){
@@ -64,6 +75,8 @@ public class ArticuloController {
         articuloService.create(articulo);
         return "redirect:/articulos/new";
     }
+
+
 
 
 

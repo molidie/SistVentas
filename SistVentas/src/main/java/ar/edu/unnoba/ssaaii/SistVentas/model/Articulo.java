@@ -23,6 +23,9 @@ public class Articulo implements UserDetails {
     @Column(name = "stock")
     private int stock;
 
+    @Column(name = "stock_min")
+    private int stock_min;
+
     @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL)
     private Set<VentaArticulo> ventaArticulos;
 
@@ -67,6 +70,14 @@ public class Articulo implements UserDetails {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public int getStock_min() {
+        return stock_min;
+    }
+
+    public void setStock_min(int stock_min) {
+        this.stock_min = stock_min;
     }
 
     @Override

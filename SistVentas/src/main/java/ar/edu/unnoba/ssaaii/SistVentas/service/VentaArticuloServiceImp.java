@@ -1,5 +1,6 @@
 package ar.edu.unnoba.ssaaii.SistVentas.service;
 
+import ar.edu.unnoba.ssaaii.SistVentas.exeption.NotFoundException;
 import ar.edu.unnoba.ssaaii.SistVentas.model.VentaArticulo;
 import ar.edu.unnoba.ssaaii.SistVentas.repository.VentaArticuloRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,6 +33,15 @@ public class VentaArticuloServiceImp implements IVentaArticuloService, UserDetai
     public void delete(Long id) {
         ventaArticuloRepository.deleteById(id);
 
+    }
+
+    @Override
+    public VentaArticulo busquedaPorId(Long id) {
+        try {
+            return ventaArticuloRepository.findById(id).orElseThrow(() -> new NotFoundException("Vendedor no encontrado con ID: " + id));
+        } catch (NotFoundException ex) {
+            return null;
+        }
     }
 
     @Override

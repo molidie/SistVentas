@@ -1,5 +1,6 @@
 package ar.edu.unnoba.ssaaii.SistVentas.service;
 
+import ar.edu.unnoba.ssaaii.SistVentas.model.Articulo;
 import ar.edu.unnoba.ssaaii.SistVentas.model.Cliente;
 import org.springframework.stereotype.Service;
 

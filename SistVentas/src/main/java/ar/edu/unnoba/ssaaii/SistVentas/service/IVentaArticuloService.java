@@ -10,4 +10,6 @@ public interface IVentaArticuloService {
     public VentaArticulo create(VentaArticulo ventaArticulo);
     public List<VentaArticulo> getAll();
     public void delete(Long id);
+
+    VentaArticulo busquedaPorId(Long id);
 }
