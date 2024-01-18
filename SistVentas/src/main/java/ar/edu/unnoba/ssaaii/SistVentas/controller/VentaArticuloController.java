@@ -13,6 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormatSymbols;
+import java.util.List;
+import java.util.Locale;
+
 @Controller
 @RequestMapping("/ventaArticulo") //con este creamos la venta
 public class VentaArticuloController {
@@ -67,6 +71,7 @@ public class VentaArticuloController {
             return "/Home/VentaAticulo/new";
         }
 
+
         return "redirect:/ventaArticulo/new";
     }
 
@@ -76,6 +81,11 @@ public class VentaArticuloController {
         model.addAttribute("listaArticulos", ventaService.articuloList());
         model.addAttribute("listaFormaPago", ventaService.formaDePagoList());
         model.addAttribute("listaVentaArticulo", ventaArticuloService.getAll());
+        List<VentaArticulo> listaVentaArticulo = ventaArticuloService.getAll();
+        double montoTotal = listaVentaArticulo.stream().mapToDouble(VentaArticulo::getMonto).sum();
+        model.addAttribute("montototal", montoTotal);
+        model.addAttribute("tabla",ventaArticuloService.obtenerMontoYPorcentajePorMes());
+
     }
 
 
@@ -93,5 +103,14 @@ public class VentaArticuloController {
         ventaArticuloService.delete(id);
         return "redirect:/ventaArticulo/new";
     }
+    @GetMapping("/infoVentas")
+    public String infoVentas(Model model){
+        model.addAttribute("tabla",ventaArticuloService.obtenerMontoYPorcentajePorMes());
+        String[] meses = new DateFormatSymbols(new Locale("es")).getMonths();
+        model.addAttribute("meses", meses);
+        return "/Home/VentaAticulo/informeDeVentas";
+
+    }
+
 }
 

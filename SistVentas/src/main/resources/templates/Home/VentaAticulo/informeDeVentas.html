@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Nueva Venta</title>
+  <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    /* Puedes agregar estilos personalizados aquí si es necesario */
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .card {
+      margin-top: 20px;
+      overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido excede la altura */
+      max-height: 400px; /* Establece una altura máxima, ajusta según tus necesidades */
+    }
+  </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Nombre</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <!-- Este bloque se mostrará solo si navbarIndicator es verdadero -->
+      <li th:if="${navbarIndicator}" class="nav-item active" style="position: relative;">
+        <a class="nav-link" href="/articulos/new">Artículos</a>
+        <div style="position: absolute; top: 50%; right: 0; transform: translate(0, -50%); background-color: red; width: 5px; height: 5px; border-radius: 50%;">
+        </div>
+      </li>
+
+      <!-- Este bloque se mostrará solo si navbarIndicator es falso -->
+      <li th:unless="${navbarIndicator}" class="nav-item active">
+        <a class="nav-link" href="/articulos/new">Artículos</a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link" href="/vendedor/listado">Vendedores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/clientes/new">Clientes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/ventaArticulo/new">Ventas</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container mt-4">
+  <h5>Informe de ventas</h5>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Mes Actual</th>
+      <th>Monto Actual</th>
+      <th>Mes Anterior</th>
+      <th>Monto Anterior</th>
+      <th>Diferencia</th>
+      <th>Porcentaje Cambio</th>
+    </tr>
+    </thead>
+    <!-- ... Tu código HTML existente ... -->
+
+    <tbody>
+    <tr th:each="resultado : ${tabla}">
+      <td th:text="${meses[resultado['mes_actual'] - 1]}"></td>
+      <td th:text="${resultado['monto_actual']}"></td>
+      <td th:text="${meses[resultado['mes_anterior'] - 1]}"></td>
+      <td th:text="${resultado['monto_anterior']}"></td>
+      <td th:text="${resultado['diferencia']}"></td>
+      <td th:text="${resultado['porcentaje_cambio']} + '%'"></td>
+    </tr>
+    </tbody>
+
+    <!-- ... Resto de tu código HTML ... -->
+
+  </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
