@@ -46,6 +46,11 @@ public class ArticuloServiceImp implements IArticuloService, UserDetailsService 
     }
 
     @Override
+    public List<Articulo> ordenarPorMasVendido() {
+        return articuloRepository.findArticuloByOrderByStockDesc();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }

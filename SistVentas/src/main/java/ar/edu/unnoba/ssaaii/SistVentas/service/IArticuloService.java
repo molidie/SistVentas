@@ -13,4 +13,6 @@ public interface IArticuloService {
     public void delete(Long id);
 
     Articulo busquedaPorId(Long id);
+
+    public List<Articulo> ordenarPorMasVendido();
 }

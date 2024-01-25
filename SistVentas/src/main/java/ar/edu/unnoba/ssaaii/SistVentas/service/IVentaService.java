@@ -19,4 +19,5 @@ public interface IVentaService {
     List<Cliente> clienteList();
 
     List<FormaDePago> formaDePagoList();
+    List<Venta> ventasPorMes();
 }

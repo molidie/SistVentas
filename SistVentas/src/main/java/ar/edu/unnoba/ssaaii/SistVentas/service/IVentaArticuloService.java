@@ -15,4 +15,8 @@ public interface IVentaArticuloService {
     VentaArticulo busquedaPorId(Long id);
 
     List<Map<String, Object>> obtenerMontoYPorcentajePorMes();
+
+    List<Map<String, Object>> obtenerMontoPorMes();
+
+    List<Map<String, Object>> obtenerPorcentajeCambioPorMes();
 }

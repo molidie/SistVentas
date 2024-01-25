@@ -11,5 +11,5 @@ import java.util.List;
 
 @Repository
 public interface VentaRepository extends JpaRepository<Venta,Long> {
-
+    List<Venta> findAllByOrderByFechaAsc();
 }

@@ -1,5 +1,6 @@
 package ar.edu.unnoba.ssaaii.SistVentas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +36,7 @@ public class Venta implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "vendedor_id")
+
     private Vendedor vendedor;
 
     public Venta() {

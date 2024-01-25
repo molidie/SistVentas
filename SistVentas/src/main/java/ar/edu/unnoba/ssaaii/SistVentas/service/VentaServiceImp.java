@@ -60,6 +60,11 @@ public class VentaServiceImp implements IVentaService, UserDetailsService {
     }
 
     @Override
+    public List<Venta> ventasPorMes() {
+        return ventaRepository.findAllByOrderByFechaAsc();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }

@@ -1,8 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nueva Venta</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Puedes agregar estilos personalizados aquí si es necesario */
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -27,6 +47,185 @@
         </ul>
     </div>
 </nav>
+<div class="container">
+    <!-- Agrega esta sección para mostrar el total de vendedores y clientes -->
+    <div class="container">
+        <div class="row">
+            <!-- Tarjeta para Total de Vendedores -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Total de Vendedores: <span th:text="${totalVendedores.size()}"></span></h4>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Tarjeta para Total de Clientes -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Total de Clientes: <span th:text="${totalClientes.size()}"></span></h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta para Total de Artículos -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Total de Articulos: <span th:text="${totalArticulos.size()}"></span></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Tarjeta con el gráfico de torta -->
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Tarjeta con el gráfico de barras -->
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="barChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Tarjeta con el gráfico de línea para el porcentaje de cambio -->
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="lineChartPorcentaje" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ... (código posterior) ... -->
+
+
+<script>
+    // Resto del script para el gráfico de torta
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Gráfico de torta
+    fetch('/home/index')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(articulosMasVendidos => {
+            var labels = articulosMasVendidos.map(articulo => articulo.nombre);
+            var datos = articulosMasVendidos.map(articulo => articulo.stock);
+            var colores = labels.map(() => getRandomColor());
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: datos,
+                        backgroundColor: colores,
+                        borderColor: colores,
+                        borderWidth: 1
+                    }]
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+    // Gráfico de barras
+    fetch('/home/ventasPorMes')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(ventasPorMes => {
+            var meses = ventasPorMes.map(mes => mes.mes);
+            var montos = ventasPorMes.map(mes => mes.monto_total);
+
+            var ctx = document.getElementById('barChart').getContext('2d');
+            var barChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: meses,
+                    datasets: [{
+                        label: 'Monto por Mes',
+                        data: montos,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+    // Nuevo bloque para obtener y mostrar el porcentaje de cambio por mes
+    fetch('/home/porcentajeCambioPorMes')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(porcentajeCambioPorMes => {
+            var mesesPorcentaje = porcentajeCambioPorMes.map(mes => mes.mes_actual);
+            var porcentajes = porcentajeCambioPorMes.map(mes => mes.porcentaje_cambio);
+
+            var ctx = document.getElementById('lineChartPorcentaje').getContext('2d');
+            var lineChartPorcentaje = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: mesesPorcentaje,
+                    datasets: [{
+                        label: 'Porcentaje de Cambio',
+                        data: porcentajes,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false  // Sin rellenar debajo de la línea
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
 </body>
 </html>

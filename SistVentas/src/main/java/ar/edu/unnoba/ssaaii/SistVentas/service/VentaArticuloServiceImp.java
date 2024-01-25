@@ -91,7 +91,42 @@ public class VentaArticuloServiceImp implements IVentaArticuloService, UserDetai
 
         return resultados;
     }
+    @Override
+    public List<Map<String, Object>> obtenerMontoPorMes() {
+        String sql = "SELECT " +
+                "    EXTRACT(MONTH FROM v.fecha) AS mes, " +
+                "    SUM(va.monto) AS monto_total " +
+                "FROM " +
+                "    ventas v " +
+                "JOIN " +
+                "    ventas_articulos va ON v.id = va.venta_id " +
+                "GROUP BY " +
+                "    EXTRACT(MONTH FROM v.fecha)";
 
+        List<Map<String, Object>> resultados = jdbcTemplate.queryForList(sql);
 
+        return resultados;
+    }
+
+    @Override
+    public List<Map<String, Object>> obtenerPorcentajeCambioPorMes() {
+        String sql = "SELECT " +
+                "    m1.mes AS mes_actual, " +
+                "    ((m1.monto_total - LAG(m1.monto_total) OVER (ORDER BY m1.mes)) / LAG(m1.monto_total) OVER (ORDER BY m1.mes)) * 100 AS porcentaje_cambio " +
+                "FROM " +
+                "    (SELECT " +
+                "        EXTRACT(MONTH FROM v.fecha) AS mes, " +
+                "        SUM(va.monto) AS monto_total " +
+                "    FROM " +
+                "        ventas v " +
+                "    JOIN " +
+                "        ventas_articulos va ON v.id = va.venta_id " +
+                "    GROUP BY " +
+                "        EXTRACT(MONTH FROM v.fecha)) m1 " +
+                "ORDER BY " +
+                "    m1.mes";
+
+        return jdbcTemplate.queryForList(sql);
+    }
 
 }

@@ -1,5 +1,6 @@
 package ar.edu.unnoba.ssaaii.SistVentas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,21 +13,25 @@ import java.util.Set;
 public class Articulo implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @Column(name = "nombre")
     private String nombre;
 
     @Column(name = "precio")
+    @JsonIgnore
     private float precio;
 
     @Column(name = "stock")
     private int stock;
 
     @Column(name = "stock_min")
+    @JsonIgnore
     private int stock_min;
 
     @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<VentaArticulo> ventaArticulos;
 
     public Articulo() {
