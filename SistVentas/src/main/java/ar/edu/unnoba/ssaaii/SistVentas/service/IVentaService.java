@@ -20,4 +20,6 @@ public interface IVentaService {
 
     List<FormaDePago> formaDePagoList();
     List<Venta> ventasPorMes();
+
+    Venta busquedaPorId(Long id);
 }

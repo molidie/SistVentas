@@ -1,5 +1,6 @@
 package ar.edu.unnoba.ssaaii.SistVentas.service;
 
+import ar.edu.unnoba.ssaaii.SistVentas.exeption.NotFoundException;
 import ar.edu.unnoba.ssaaii.SistVentas.model.*;
 import ar.edu.unnoba.ssaaii.SistVentas.repository.*;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,6 +64,16 @@ public class VentaServiceImp implements IVentaService, UserDetailsService {
     public List<Venta> ventasPorMes() {
         return ventaRepository.findAllByOrderByFechaAsc();
     }
+
+    @Override
+    public Venta busquedaPorId(Long id) {
+        try {
+            return ventaRepository.findById(id).orElseThrow(() -> new NotFoundException("Vendedor no encontrado con ID: " + id));
+        } catch (NotFoundException ex) {
+            return null;
+        }
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

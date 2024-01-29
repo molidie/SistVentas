@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Nueva Venta</title>
+    <title>Nuevo Artículo de Venta</title>
     <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
@@ -24,10 +24,8 @@
             max-height: 400px; /* Establece una altura máxima, ajusta según tus necesidades */
         }
     </style>
-
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Nombre</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,15 +36,13 @@
             <!-- Este bloque se mostrará solo si navbarIndicator es verdadero -->
             <li th:if="${navbarIndicator}" class="nav-item active" style="position: relative;">
                 <a class="nav-link" href="/articulos/new">Artículos</a>
-                <div style="position: absolute; top: 50%; right: 0; transform: translate(0, -50%); background-color: red; width: 5px; height: 5px; border-radius: 50%;">
-                </div>
+                <div style="position: absolute; top: 50%; right: 0; transform: translate(0, -50%); background-color: red; width: 5px; height: 5px; border-radius: 50%;"></div>
             </li>
 
             <!-- Este bloque se mostrará solo si navbarIndicator es falso -->
             <li th:unless="${navbarIndicator}" class="nav-item active">
                 <a class="nav-link" href="/articulos/new">Artículos</a>
             </li>
-
 
             <li class="nav-item">
                 <a class="nav-link" href="/vendedor/listado">Vendedores</a>
@@ -60,141 +56,52 @@
         </ul>
     </div>
 </nav>
+
 <div class="container">
+    <h2>Nuevo Artículo de Venta</h2>
 
-    <h4 class="mt-4">Nueva Venta</h4>
-
-
-    <div class="alert alert-warning" th:if="${stockInsuficiente}" role="alert">
-        ¡Advertencia! La cantidad supera al stock disponible. Intente con otra cantidad.
-    </div>
-
-
-
-    <form th:action="@{/ventaArticulo/new}" th:object="${ventaArticulo}" method="post">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="fecha">Fecha</label>
-                    <input type="date" class="form-control" id="fecha" th:field="*{venta.fecha}" required>
-                </div>
+    <form th:action="@{'/ventaArticulo/new/' + ${venta.id}}" th:object="${ventaArticulo}" method="post">
+        <div class="form-group">
+            <div class="alert alert-warning" th:if="${stockInsuficiente}" role="alert">
+                ¡Advertencia! La cantidad supera al stock disponible. Intente con otra cantidad.
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="descripcion">Descripción</label>
-                    <input type="text" class="form-control" id="descripcion" th:field="*{venta.descripcion}" required>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="cantidad">Cantidad</label>
-                    <input type="number" class="form-control" id="cantidad" th:field="*{cantidad}" required>
-                </div>
-            </div>
+
+            <label for="articulo">Artículo:</label>
+            <select class="form-control" id="articulo" th:field="*{articulo}" required>
+                <option th:each="articulo : ${articulos}" th:value="${articulo.id}" th:text="${articulo.nombre}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" class="form-control" id="cantidad" th:field="*{cantidad}" required>
         </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="cliente">Cliente</label>
-                    <select class="form-control" id="cliente" th:field="*{venta.cliente.id}" required>
-                        <option th:each="cliente : ${listaClientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="vendedor">Vendedor</label>
-                    <select class="form-control" id="vendedor" th:field="*{venta.vendedor.id}" required>
-                        <option th:each="vendedor : ${listaVendedor}" th:value="${vendedor.id}" th:text="${vendedor.nombre}"></option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="formaPago">Forma de Pago</label>
-                    <select class="form-control" id="formaPago" th:field="*{venta.ventaFormasPago}"  required>
-                        <option th:each="formaPago : ${listaFormaPago}" th:value="${formaPago.id}" th:text="${formaPago.tipo}"></option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="articulo">Articulo</label>
-                    <select class="form-control" id="articulo" th:field="*{articulo.id}" th:onchange="cargarDatosArticulo(this.value)" required>
-                        <option th:each="articulo : ${listaArticulos}" th:value="${articulo.id}" th:text="${articulo.nombre}"></option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Crear</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
+
+    <!-- Tabla para mostrar los artículos de la venta -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Monto</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Itera sobre los artículos de la venta y muestra cada uno en una fila de la tabla -->
+        <tr th:each="articuloVenta : ${venta.getVentaArticulos()}">
+            <td th:text="${articuloVenta.getArticulo().getNombre()}"></td>
+            <td th:text="${articuloVenta.cantidad}"></td>
+            <td th:text="${articuloVenta.monto}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
-
-<div class="container"> <!-- Nuevo contenedor para la tabla -->
-    <h5>Lista de Venta de Artículos</h5>
-
-    <div class="card">
-
-        <div class="card-header">
-        </div>
-        <div class="card-body p-0">
-            <table class="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Fecha</th>
-                    <th>Vendedor</th>
-                    <th>Cliente</th>
-                    <th>Cantidad</th>
-                    <th>Monto</th>
-                    <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="articulo : ${listaVentaArticulo}">
-                    <td th:text="${articulo.getArticulo().getNombre()}"></td>
-                    <td th:text="${articulo.getVenta().fecha}"></td>
-                    <td th:text="${articulo.getVenta().vendedor.getNombre()}"></td>
-                    <td th:text="${articulo.getVenta().cliente.getNombre()}"></td>
-                    <td th:text="${articulo.getCantidad()}"></td>
-                    <td th:text="${articulo.getMonto()}"></td>
-                    <td>
-                        <a th:href="@{'/ventaArticulo/detalles/' + ${articulo.id}}" class="btn btn-info btn-sm ">Detalles</a>
-                        <a th:href="@{'/ventaArticulo/eliminar/' + ${articulo.id}}" class="btn btn-danger btn-sm ">Eliminar</a>
-                        <a th:href="@{'/articulos/editar/' + ${articulo.id}}" class="btn btn-warning btn-sm">Editar</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <h5>Monto total: <span th:text="${montototal}"></span></h5>
-
-    </tr>
-    <div class="container text-center mt-4">
-        <a th:href="@{/ventaArticulo/infoVentas}" class="btn btn-primary">Ir a Informe de Ventas</a>
-    </div>
-
-</div>
-
-
-
-</body>
-</html>
 
 <!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
 </body>
-
-
 </html>
