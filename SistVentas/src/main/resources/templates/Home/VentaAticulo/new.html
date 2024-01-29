@@ -94,6 +94,11 @@
             <td th:text="${articuloVenta.getArticulo().getNombre()}"></td>
             <td th:text="${articuloVenta.cantidad}"></td>
             <td th:text="${articuloVenta.monto}"></td>
+            <td>
+                <!-- Corregir la URL generada para el enlace de eliminación -->
+                <a th:href="@{'/ventaArticulo/eliminar/' + ${articuloVenta.id}}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar este artículo de la venta?')">Eliminar</a>
+            </td>
+
         </tr>
         </tbody>
     </table>

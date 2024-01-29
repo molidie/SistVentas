@@ -79,21 +79,14 @@ public class VentaArticuloController {
     }
 
 
-
-/**
-    @GetMapping("/cargarDatosArticulo/{articuloId}")
-    @ResponseBody
-    public Articulo cargarDatosArticulo(@PathVariable Long articuloId) {
-        return articuloService.busquedaPorId(articuloId);
-    }**/ //este por ahi se elimina
-/**
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id){
         VentaArticulo ventaArticulo = ventaArticuloService.busquedaPorId(id);
+        Long idV = ventaArticulo.getVenta().getId();
         Articulo articulo = ventaArticulo.getArticulo();
         articulo.setStock(articulo.getStock() + ventaArticulo.getCantidad());
         ventaArticuloService.delete(id);
-        return "redirect:/ventaArticulo/new";
+        return "redirect:/ventaArticulo/new/" +idV;
     }
     @GetMapping("/infoVentas")
     public String infoVentas(Model model){
@@ -102,7 +95,7 @@ public class VentaArticuloController {
         model.addAttribute("meses", meses);
         return "/Home/VentaAticulo/informeDeVentas";
 
-    }**/ //andan perfecto nada mas que estamos modificando el controller
+    }
 
 }
 
