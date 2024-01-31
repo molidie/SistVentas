@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -50,6 +51,22 @@ public class VentaController {
         Cliente cliente =  clienteService.busquedaPorId(clienteid);
         cliente.getVentas().add(venta);
         System.out.println(cliente.getVentas().size());
+        return "redirect:/venta/new";
+    }
+
+    @GetMapping("/cancelar/{idV}")
+    public String cancelarVenta(@PathVariable Long idV) {
+        Venta venta = ventaService.busquedaPorId(idV);
+
+        // Itera sobre los VentaArticulo de la venta para devolver a stock la cantidad
+        for (VentaArticulo ventaArticulo : venta.getVentaArticulos()) {
+            Articulo articulo = ventaArticulo.getArticulo();
+            articulo.setStock(articulo.getStock() + ventaArticulo.getCantidad());
+        }
+
+        // Elimina la venta (esto también eliminará los VentaArticulo debido a la cascada)
+        ventaService.delete(idV);
+
         return "redirect:/venta/new";
     }
 

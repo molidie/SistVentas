@@ -95,15 +95,6 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="formaPago">Forma de Pago</label>
-                    <select class="form-control" id="formaPago" th:field="*{ventaFormasPago}" multiple="multiple" required>
-                        <!-- Opciones de formas de pago desde la base de datos -->
-                        <option th:each="formaPago : ${listaFormasPago}" th:value="${formaPago.id}" th:text="${formaPago.tipo}"></option>
-                    </select>
-                </div>
-            </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Crear</button>
@@ -118,7 +109,6 @@
                 <th>Descripción</th>
                 <th>Cliente</th>
                 <th>Vendedor</th>
-                <th>Forma de Pago</th>
                 <th>Acciones</th>
             </tr>
             </thead>
@@ -130,15 +120,10 @@
                 <td th:text="${venta.cliente.nombre}"></td>
                 <td th:text="${venta.vendedor.nombre}"></td>
                 <td>
-                    <!-- Iterar sobre las formas de pago de la venta -->
-                    <span th:each="formaPago : ${venta.ventaFormasPago}">
-                        <span th:text="${formaPago.tipo}"></span>
-                        <span th:if="${!#lists.last(venta.ventaFormasPago)}">, </span>
-                    </span>
-                </td>
-                <td>
                     <a th:href="@{/ventaArticulo/new/{id}(id=${venta.id})}" class="btn btn-primary">Agregar Productos</a>
+                    <a th:href="@{/ventaFormaDePago/new/{id}(id=${venta.id})}" class="btn btn-success">Finalizar Compra</a>
 
+                    <a th:href="@{/venta/cancelar/{id}(id=${venta.id})}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta venta?')">Eliminar</a>
 
                 </td>
             </tr>

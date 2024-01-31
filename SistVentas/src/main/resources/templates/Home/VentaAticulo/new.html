@@ -102,6 +102,12 @@
         </tr>
         </tbody>
     </table>
+    <p>Monto Total de Venta de Artículos: <span th:text="${montoTotalVentaArticulo}"></span></p>
+    <!-- Agrega este botón donde desees en tu página HTML -->
+    <form th:action="@{'/ventaArticulo/cancelar/' + ${venta.id}}" method="get">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de volver, no se eliminaran los artículos de la venta')">Volver</button>
+    </form>
+
 </div>
 
 <!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->

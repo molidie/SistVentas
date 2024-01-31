@@ -40,11 +40,17 @@ public class VentaArticuloController {
     @GetMapping("/new/{id}")
     public String nuevo(@PathVariable Long id,Model model){
         VentaArticulo ventaArticulo = new VentaArticulo();
+        float montoT = 0f;
         Venta venta = ventaService.busquedaPorId(id);
         model.addAttribute("ventaArticulo", ventaArticulo);
         model.addAttribute("venta", venta);
         model.addAttribute("articulos",articuloService.getAll());
         model.addAttribute("articulosVendidos", venta.getVentaArticulos());
+        for (VentaArticulo vA : venta.getVentaArticulos()) {
+            montoT += vA.getMonto();
+        }
+        model.addAttribute("montoTotalVentaArticulo",montoT);
+
         return "/Home/VentaAticulo/new";
     }
 
@@ -54,6 +60,7 @@ public class VentaArticuloController {
         Venta venta = ventaService.busquedaPorId(idE);
         model.addAttribute("venta",venta);
         ventaArticulo.setVenta(venta);
+        float montoT = 0f;
         try {
             Articulo articulo = articuloService.busquedaPorId(ventaArticulo.getArticulo().getId());
             model.addAttribute("articulos",articulo);
@@ -75,6 +82,10 @@ public class VentaArticuloController {
         }
         ventaArticuloService.create(ventaArticulo);
         venta.getVentaArticulos().add(ventaArticulo);
+        for (VentaArticulo vA : venta.getVentaArticulos()) {
+            montoT += vA.getMonto();
+        }
+        model.addAttribute("montoTotalVentaArticulo",montoT);
         return "redirect:/ventaArticulo/new/" +idE;
     }
 
@@ -88,6 +99,13 @@ public class VentaArticuloController {
         ventaArticuloService.delete(id);
         return "redirect:/ventaArticulo/new/" +idV;
     }
+
+    @GetMapping("/cancelar/{idV}")
+    public String cancelar(@PathVariable Long idV, Model model) {
+        return "redirect:/venta/new";
+    }
+
+
     @GetMapping("/infoVentas")
     public String infoVentas(Model model){
         model.addAttribute("tabla",ventaArticuloService.obtenerMontoYPorcentajePorMes());
