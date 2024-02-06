@@ -31,7 +31,7 @@ public class VentaFormaDePagoController {
     @Autowired
     private IVentaService ventaService;
 
-    private List<VentaFormaPago> ventaFormaPagos = new ArrayList<>();
+    private final List<VentaFormaPago> ventaFormaPagos = new ArrayList<>();
 
     public VentaFormaDePagoController(IVentaFormaDePagoService ventaFormaDePagoService, IFormaDePagoService formaDePagoService, IVentaService ventaService) {
         this.ventaFormaDePagoService = ventaFormaDePagoService;
@@ -81,9 +81,10 @@ public class VentaFormaDePagoController {
     }
 
     @GetMapping("/guardar/{idP}")
-    public String guardarVentaFormaDePago(@PathVariable Long idP, VentaFormaPago ventaFormaPago){
-        Venta venta = ventaService.busquedaPorId(idP);
-        ventaFormaDePagoService.create(ventaFormaPagos.get(0));
+    public String guardarVentaFormaDePago(@PathVariable Long idP){
+        int index =  ventaFormaPagos.size();
+        ventaFormaDePagoService.create(ventaFormaPagos.get(index-1));
+        ventaFormaPagos.clear();
         return "redirect:/ventaFormaDePago/new/" +idP;
     }
 
