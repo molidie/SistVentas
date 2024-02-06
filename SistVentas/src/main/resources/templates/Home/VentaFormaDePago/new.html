@@ -67,17 +67,24 @@
             <option th:each="formaDePago : ${formasDePago}" th:value="${formaDePago.id}" th:text="${formaDePago.tipo}"></option>
         </select>
 
-        <div class="form-group">
+        <div class="form-group" id="cuotasField">
             <label for="cuotas">Cuotas:</label>
             <input type="number" class="form-control" id="cuotas" th:field="*{cuotas}" required>
             <span th:if="${#fields.hasErrors('cuotas')}" th:errors="*{cuotas}">Error en cuotas</span>
         </div>
 
-        <div class="form-group">
-            <label for="cuotas">Interes:</label>
+        <div class="form-group" id="interesField">
+            <label for="interes">Interes:</label>
             <input type="number" class="form-control" id="interes" th:field="*{interes}" required>
             <span th:if="${#fields.hasErrors('interes')}" th:errors="*{interes}">Error en interes</span>
         </div>
+
+        <div class="form-group" id="descuentoField">
+            <label for="descuento">Descuento:</label>
+            <input type="number" class="form-control" id="descuento" th:field="*{descuento}" required>
+            <span th:if="${#fields.hasErrors('descuento')}" th:errors="*{descuento}">Error en descuento</span>
+        </div>
+
         <p>Valor de la venta: <span th:text="${valorVenta}"></span></p>
         <p>Valor por cuota: <span th:text="${valorCuotas}"></span></p>
         <p>Valor del interes por cuota: <span th:text="${valorInteresPorCuota}"></span></p>
@@ -91,6 +98,37 @@
         <button type="submit">Guardar Venta</button>
     </form>
 </div>
+
+<script>
+    document.getElementById('formaDePago').addEventListener('change', function() {
+        var formaDePago = this.value;
+        var cuotasField = document.getElementById('cuotasField');
+        var interesField = document.getElementById('interesField');
+        var descuentoField = document.getElementById('descuentoField');
+
+        // Ocultar todos los campos
+        cuotasField.style.display = 'none';
+        interesField.style.display = 'none';
+        descuentoField.style.display = 'none';
+
+        // Mostrar los campos según la forma de pago seleccionada
+        if (formaDePago === '1') { // Suponiendo que 'CREDITO' tiene un value de '1'
+            cuotasField.style.display = 'block';
+            interesField.style.display = 'block';
+            document.getElementById('descuento').value = 0; // Establecer cuotas en 1
+
+        } else if (formaDePago === '3') { // Suponiendo que 'EFECTIVO' tiene un value de '5'
+            descuentoField.style.display = 'block';
+            document.getElementById('cuotas').value = 1; // Establecer cuotas en 1
+            document.getElementById('interes').value = 1; // Establecer interés en 1
+        } else if (formaDePago === '2' || formaDePago === '5' || formaDePago === '4') { // Suponiendo los values de 'DEBITO', 'TRANSFERENCIA' y 'CHEQUE'
+            interesField.style.display = 'block';
+            document.getElementById('cuotas').value = 1; // Establecer cuotas en 1
+            document.getElementById('descuento').value = 0; // Establecer cuotas en 1
+        }
+    });
+</script>
+
 
 
 

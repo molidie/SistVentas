@@ -19,6 +19,8 @@ public class VentaFormaPago implements UserDetails {
     private int cuotas;
    @Column(name = "interes")
     private float interes;
+   @Column(name = "descuento")
+    private float descuento;
 
     @ManyToOne
     @JoinColumn(name = "venta_id")
@@ -77,6 +79,14 @@ public class VentaFormaPago implements UserDetails {
 
     public void setInteres(float interes) {
         this.interes = interes;
+    }
+
+    public float getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(float descuento) {
+        this.descuento = descuento;
     }
 
     @Override
