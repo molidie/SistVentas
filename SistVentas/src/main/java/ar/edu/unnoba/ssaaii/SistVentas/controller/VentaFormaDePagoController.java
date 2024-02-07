@@ -97,8 +97,34 @@ public class VentaFormaDePagoController {
     public String guardarVentaFormaDePago(@PathVariable Long idP){
         int index =  ventaFormaPagos.size();
         ventaFormaDePagoService.create(ventaFormaPagos.get(index-1));
+        Long id = ventaFormaPagos.get(index-1).getId();
         ventaFormaPagos.clear();
-        return "redirect:/ventaFormaDePago/new/" +idP;
+        return "redirect:/ventaFormaDePago/nota/" +idP +"/" + id;
     }
+
+    @GetMapping("/nota/{idV}/{idN}")
+    public String notaDeCompra(@PathVariable Long idV,@PathVariable Long idN,Model model){
+        Venta venta = ventaService.busquedaPorId(idV);
+       VentaFormaPago ventaFormaPago =  ventaFormaDePagoService.busquedaPorId(idN);
+        float montoVenta = 0f;
+
+        for (VentaArticulo vA : venta.getVentaArticulos()) {
+            if (Objects.equals(vA.getVenta().getId(), venta.getId())) {
+                montoVenta += vA.getMonto();
+            }
+        }
+        model.addAttribute("ventasDeArticulos", venta.getVentaArticulos());
+        model.addAttribute("cliente", venta.getCliente().getNombre());
+        model.addAttribute("Vendedor", venta.getVendedor().getNombre());
+        model.addAttribute("codigoDeVenta", venta.getId());
+        model.addAttribute("montoTotalVenta", montoVenta);
+        model.addAttribute("cuotas", ventaFormaPago.getCuotas());
+        model.addAttribute("interes", ventaFormaPago.getInteres());
+        model.addAttribute("Descuento", ventaFormaPago.getDescuento());
+        model.addAttribute("Total", ventaFormaPago.getMonto());
+        model.addAttribute("tipoFormaDePago", ventaFormaPago.getFormaDePago().getTipo());
+        return "/Home/VentaFormaDePago/nota";
+    }
+
 
 }

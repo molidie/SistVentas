@@ -1,5 +1,6 @@
 package ar.edu.unnoba.ssaaii.SistVentas.service;
 
+import ar.edu.unnoba.ssaaii.SistVentas.exeption.NotFoundException;
 import ar.edu.unnoba.ssaaii.SistVentas.model.VentaFormaPago;
 import ar.edu.unnoba.ssaaii.SistVentas.repository.VentaFormaDePagoRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +32,14 @@ public class VentaFormaDePagoServiceImp implements IVentaFormaDePagoService, Use
     public void delete(Long id) {
         ventaFormaDePagoRepository.deleteById(id);
     }
-
+    @Override
+    public VentaFormaPago busquedaPorId(Long id) {
+        try {
+            return ventaFormaDePagoRepository.findById(id).orElseThrow(() -> new NotFoundException("Vendedor no encontrado con ID: " + id));
+        } catch (NotFoundException ex) {
+            return null;
+        }
+    }
 
 
     @Override

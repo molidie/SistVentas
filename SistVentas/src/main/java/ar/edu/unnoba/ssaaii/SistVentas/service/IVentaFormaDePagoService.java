@@ -10,4 +10,6 @@ public interface IVentaFormaDePagoService {
     public VentaFormaPago create(VentaFormaPago ventaFormaPago);
     public List<VentaFormaPago> getAll();
     public void delete(Long id);
+
+    VentaFormaPago busquedaPorId(Long id);
 }

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nota de Compra</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Nombre</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <!-- Este bloque se mostrará solo si navbarIndicator es verdadero -->
+            <li th:if="${navbarIndicator}" class="nav-item active" style="position: relative;">
+                <a class="nav-link" href="/articulos/new">Artículos</a>
+                <div style="position: absolute; top: 50%; right: 0; transform: translate(0, -50%); background-color: red; width: 5px; height: 5px; border-radius: 50%;"></div>
+            </li>
+
+            <!-- Este bloque se mostrará solo si navbarIndicator es falso -->
+            <li th:unless="${navbarIndicator}" class="nav-item active">
+                <a class="nav-link" href="/articulos/new">Artículos</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/vendedor/listado">Vendedores</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/clientes/new">Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/venta/new">Ventas</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h5>Detalles venta:</h5>
+            <p>Vendedor: <span th:text="${cliente}"></span></p>
+        </div>
+        <div class="col">
+            <h5>&nbsp;</h5>
+            <p>Cliente: <span th:text="${Vendedor}"></span></p>
+        </div>
+        <div class="col">
+            <h5>&nbsp;</h5>
+            <p>Codigo venta: <span th:text="${codigoDeVenta}"></span></p>
+        </div>
+
+        <div class="col">
+            <h5>&nbsp;</h5>
+            <p>Forma de pago: <span th:text="${tipoFormaDePago}"></span></p>
+        </div>
+    </div>
+
+    <h5>Ventas de Artículos:</h5>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Artículo</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Codigo del producto</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ventaArticulo : ${ventasDeArticulos}">
+            <td th:text="${ventaArticulo.articulo.nombre}"></td>
+            <td th:text="${ventaArticulo.monto}"></td>
+            <td th:text="${ventaArticulo.cantidad}"></td>
+            <td th:text="${ventaArticulo.id}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Detalles adicionales de la venta -->
+    <div>
+        <h5>Detalles del pago:</h5>
+        <p>Cuotas: <span th:text="${cuotas}"></span></p>
+        <p>Interés: <span th:text="${interes}"></span></p>
+        <p>Descuento: <span th:text="${Descuento}"></span></p>
+        <p>IVA: 21%</p>
+        <h4>Total: <span th:text="${Total}"></span></h4>
+    </div>
+    <button onclick="capturarYGenerarPDF()">Generar PDF</button>
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    function capturarYGenerarPDF() {
+        window.print();
+    }
+</script>
+</body>
+</html>
