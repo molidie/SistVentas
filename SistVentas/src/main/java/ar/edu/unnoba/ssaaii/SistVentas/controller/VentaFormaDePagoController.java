@@ -57,7 +57,7 @@ public class VentaFormaDePagoController {
 
         for (VentaArticulo vA : venta.getVentaArticulos()) {
             if (Objects.equals(vA.getVenta().getId(), venta.getId())) {
-                montoVenta = vA.getMonto();
+                montoVenta += vA.getMonto();
             }
         }
 
@@ -66,13 +66,26 @@ public class VentaFormaDePagoController {
         model.addAttribute("formasDePago", formaDePagoService.getAll());
 
 
-        // Calcula el valor de las cuotas antes de persistirlo
+
         float valorCuotas = montoVenta / ventaFormaPago.getCuotas();
         model.addAttribute("valorCuotas", valorCuotas);
-        float valorInteresPorCuota = ventaFormaPago.getCuotas() * ventaFormaPago.getInteres();
-        model.addAttribute("valorInteresPorCuota",valorInteresPorCuota);
-        model.addAttribute("valorVenta",montoVenta);
-        float valorFinal = (montoVenta)+((montoVenta * valorInteresPorCuota )* 0.21f);
+
+        float valorInteresPorCuota = ventaFormaPago.getInteres() / 100;
+        float montoConInteres = montoVenta * (1 + valorInteresPorCuota);
+        float valorCuotaConInteres = montoConInteres / ventaFormaPago.getCuotas();
+        model.addAttribute("valorInteresPorCuota", valorInteresPorCuota);
+
+        model.addAttribute("valorVenta", montoVenta);
+
+        float valorFinal = montoConInteres * 1.21f;
+
+
+        if (Objects.equals(ventaFormaPago.getFormaDePago().getTipo(), "EFECTIVO")){
+            valorFinal = (montoVenta)-((montoVenta * (ventaFormaPago.getDescuento()/100) ));
+            valorFinal= valorFinal*1.21f;
+            model.addAttribute("descuento",ventaFormaPago.getDescuento() );
+
+        }
         model.addAttribute("valorfinal",valorFinal);
         ventaFormaPago.setMonto(valorFinal);
         ventaFormaPago.setVenta(venta);
