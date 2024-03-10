@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Informe Ventas</title>
+    <title>Mas información</title>
     <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -115,40 +115,28 @@
     </ul>
   </div>
 </nav>
-<div class="container">
-  <h2>Detalles del Vendedor</h2>
+    <div class="container">
+        <h4 class="mt-4">Detalles de: <span th:text="${articulo.nombre}" style="color: blue;"></span></h4>
 
-  <div th:if="${vendedor != null}">
-    <dl class="row">
-      <dt class="col-sm-3">Nombre:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.nombre}"></dd>
+        <div>
+            <p><strong>Nombre:</strong> <span th:text="${articulo.nombre}"></span></p>
+            <p><strong>Precio:</strong> <span th:text="${'$'+#numbers.formatDecimal(articulo.precio, 0, 'COMMA', 2, 'POINT')}"></span></p>
+            <p><strong>Stock:</strong> <span th:text="${articulo.stock}"></span></p>
+            <p><strong>Stock Mínimo:</strong> <span th:text="${articulo.stock_min}"></span></p>
+            <p><strong>Fecha de Ingreso:</strong><span th:text="${#dates.format(articulo.fechaIngreso, 'dd/MM/yyyy')}"></span></p>
+            <p><strong>Proveedor:</strong> <span th:text="${articulo.proveedor.nombreEmpresa}"></span></p>
+        </div>
+        <a th:href="@{/articulos/new}" class="btn btn-primary mt-3">Volver</a>
+        <a th:href="@{'/articulos/editar/' + ${articulo.id}}" class="btn btn-success mt-3">Actualizar datos</a>
+        <a th:href="@{'/articulos/stockmin/' + ${articulo.id}}" class="btn btn-success mt-3">Modificar stock minimo</a>
+    </div>
 
-      <dt class="col-sm-3">Apellido:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.apellido}"></dd>
+    </div>
 
-      <dt class="col-sm-3">Telefono:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.telefono}"></dd>
-
-      <dt class="col-sm-3">Direccion:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.direccion}"></dd>
-
-      <dt class="col-sm-3">Correo Electrónico:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.mail}"></dd>
-    </dl>
-  </div>
-
-  <div th:if="${vendedor == null}">
-    <p class="text-danger">ID del vendedor no existente.</p>
-  </div>
-
-  <a th:href="@{/vendedor/listado}" class="btn btn-primary">Volver al Listado</a>
-</div>
-
-
-<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+
 </html>

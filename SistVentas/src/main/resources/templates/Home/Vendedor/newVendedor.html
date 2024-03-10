@@ -1,103 +1,181 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Alta de Vendedor</title>
+    <title>Informe Ventas</title>
     <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  
     <style>
-        /* Puedes agregar estilos personalizados aquí si es necesario */
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            background-color: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .card {
-            margin: 0 auto; /* Centra el card en la página */
-            max-width: 400px; /* Establece el ancho máximo del card */
-        }
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+      }
+  
+      .container {
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 30px;
+        margin-top: 50px;
+      }
+  
+      .navbar {
+        background-color: #343a40;
+        border-radius: 0;
+      }
+  
+      .navbar-brand {
+        font-weight: bold;
+        color: #ffffff;
+      }
+  
+      .navbar-toggler-icon {
+        background-color: #ffffff;
+      }
+  
+      .navbar-nav {
+        margin-left: auto;
+      }
+  
+      .nav-item {
+        margin-right: 20px;
+      }
+  
+      .nav-link {
+        color: #ffffff;
+      }
+  
+      .nav-link:hover {
+        color: #f8f9fa;
+      }
+  
+      h2 {
+        color: #007bff;
+      }
+  
+      .text-danger {
+        color: #dc3545;
+      }
+  
+      .btn-primary {
+        background-color: #007bff;
+        border: none;
+      }
+  
+      .btn-primary:hover {
+        background-color: #0056b3;
+      }
+  
+      .navbar-nav a,
+      .btn-primary {
+        transition: color 0.3s ease;
+      }
     </style>
-</head>
+  </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Nombre</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <!-- Este bloque se mostrará solo si navbarIndicator es verdadero -->
-            <li th:if="${navbarIndicator}" class="nav-item active" style="position: relative;">
-                <a class="nav-link" href="/articulos/new">Artículos</a>
-                <div style="position: absolute; top: 50%; right: 0; transform: translate(0, -50%); background-color: red; width: 5px; height: 5px; border-radius: 50%;">
-                </div>
-            </li>
+  <a class="navbar-brand" href="/home">SistVentas</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/proveedor/listado">Proveedores</a>
+    </li>
+      <!-- Este bloque se mostrará solo si navbarIndicator es verdadero -->
+      <li th:if="${navbarIndicator}" class="nav-item " style="position: relative;">
+        <a class="nav-link" href="/articulos/new">Artículos</a>
+        <div style="position: absolute; top: 50%; right: 0; transform: translate(0, -50%); background-color: red; width: 5px; height: 5px; border-radius: 50%;">
+        </div>
+      </li>
 
-            <!-- Este bloque se mostrará solo si navbarIndicator es falso -->
-            <li th:unless="${navbarIndicator}" class="nav-item active">
-                <a class="nav-link" href="/articulos/new">Artículos</a>
-            </li>
+      <!-- Este bloque se mostrará solo si navbarIndicator es falso -->
+      <li th:unless="${navbarIndicator}" class="nav-item">
+        <a class="nav-link" href="/articulos/new">Artículos</a>
+      </li>
 
 
-            <li class="nav-item">
-                <a class="nav-link" href="/vendedor/listado">Vendedores</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/clientes/new">Clientes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/ventaArticulo/new">Ventas</a>
-            </li>
-        </ul>
-    </div>
+      <li class="nav-item">
+        <a class="nav-link" href="/vendedor/listado">Vendedores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/clientes/new">Clientes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/venta/new">Ventas</a>
+      <li class="nav-item">
+        <a class="nav-link" href="/ventaArticulo/infoVentas">Info Ventas</a>
+      </li>
+    </ul>
+  </div>
 </nav>
-<div class="container">
+  <div class="container">
     <div class="card">
-        <div class="card-header bg-dark text-white">
-            <h5 class="mb-0">Alta de Vendedor</h5>
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Ingrese los datos del vendedor</h5>
+      </div>
+      <div class="card-body">
+        <!-- Mostrar mensaje de error -->
+        <!-- Mostrar mensaje de error con un pequeño margen superior -->
+        <div th:if="${errorMessage != null}" class="alert alert-danger mt-3" role="alert">
+          <p th:text="${errorMessage}"></p>
         </div>
-        <div class="card-body">
-            <!-- Mostrar mensaje de error -->
-            <!-- Mostrar mensaje de error con un pequeño margen superior -->
-            <div th:if="${errorMessage != null}" class="alert alert-danger mt-3" role="alert">
-                <p th:text="${errorMessage}"></p>
-            </div>
 
 
-            <form th:action="@{/vendedor}" th:object="${vendedor}" method="post">
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" th:field="*{nombre}" placeholder="Ingrese su nombre">
-                </div>
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" class="form-control" th:field="*{apellido}" placeholder="Ingrese su apellido">
-                </div>
-                <div class="form-group">
-                    <label for="mail">Correo Electrónico</label>
-                    <input type="email" class="form-control" th:field="*{mail}" placeholder="Ingrese su correo electrónico">
-                </div>
-                <div class="form-group">
-                    <label for="contrasena">Contraseña</label>
-                    <input type="password" class="form-control" th:field="*{contraseña}" placeholder="Ingrese su contraseña">
-                </div>
-                <button type="submit" class="btn btn-primary">Registrar</button>
-            </form>
-
+        <form th:action="@{/vendedor}" th:object="${vendedor}" method="post">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" th:field="*{nombre}" placeholder="Ingrese su nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input type="text" class="form-control" th:field="*{apellido}" placeholder="Ingrese su apellido" required>
+          </div>
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="tel" class="form-control" th:field="*{telefono}" placeholder="Ingrese número de teléfono"
+              required>
+            <small id="telefonoHelp" class="form-text text-muted">Ingrese el número de teléfono con el formato
+              correcto.</small>
+          </div>
+          <div class="form-group ">
+            <label for="fechaContratacion">Fecha de contratacion</label>
+            <input type="date" class="form-control" id="fechaContratacion" th:field="*{fechaContratacion}" required>
+          </div>
+          <div class="form-group ">
+            <label for="direccion">Direccion</label>
+            <input type="text" class="form-control" id="direccion" th:field="*{direccion}"
+                placeholder="Ingrese direccion" required>
         </div>
+          <div class="form-group">
+            <label for="mail">Correo Electrónico</label>
+            <input type="email" class="form-control" th:field="*{mail}" placeholder="Ingrese su correo electrónico"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="contrasena">Contraseña</label>
+            <input type="password" class="form-control" th:field="*{contraseña}" placeholder="Ingrese su contraseña"
+              required>
+          </div>
+          <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+
+      </div>
     </div>
-</div>
+  </div>
 
-<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

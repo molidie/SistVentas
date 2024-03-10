@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Informe Ventas</title>
+    <title>Lista de Proveedores</title>
     <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -115,40 +115,51 @@
     </ul>
   </div>
 </nav>
-<div class="container">
-  <h2>Detalles del Vendedor</h2>
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <div class="float-right">
+                    <a th:href="@{/proveedor/new}" class="btn btn-primary btn-sm">Registrar proveedor</a>
+                </div>
+                <h5 class="mb-0">Listado de Proveedores</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre empresa</th>
+                            <th>Nombre de Contacto</th>
+                            <th>Correo Electrónico</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="proveedor : ${proveedores}">
+                            <td th:text="${proveedor.nombreEmpresa}"></td>
+                            <td th:text="${proveedor.nombreContacto+ ' ' +proveedor.apellidoContacto}"></td>
+                            <td th:text="${proveedor.mail}"></td>
+                            <td>
+                                <a th:href="@{'/proveedor/detalles/' + ${proveedor.id}}"
+                                    class="btn btn-info btn-sm">Detalles</a>
+                                <a th:href="@{'/proveedor/editar/' + ${proveedor.id}}"
+                                    class="btn btn-primary btn-sm">Modificar datos</a>
+                                <a th:href="@{'/proveedor/eliminar/' + ${proveedor.id}}" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Estás seguro de que quieres eliminar este vendedor?')">Eliminar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-  <div th:if="${vendedor != null}">
-    <dl class="row">
-      <dt class="col-sm-3">Nombre:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.nombre}"></dd>
 
-      <dt class="col-sm-3">Apellido:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.apellido}"></dd>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <!-- Incluye la biblioteca de Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-      <dt class="col-sm-3">Telefono:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.telefono}"></dd>
-
-      <dt class="col-sm-3">Direccion:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.direccion}"></dd>
-
-      <dt class="col-sm-3">Correo Electrónico:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.mail}"></dd>
-    </dl>
-  </div>
-
-  <div th:if="${vendedor == null}">
-    <p class="text-danger">ID del vendedor no existente.</p>
-  </div>
-
-  <a th:href="@{/vendedor/listado}" class="btn btn-primary">Volver al Listado</a>
-</div>
-
-
-<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

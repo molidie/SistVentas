@@ -19,6 +19,9 @@ public class Cliente implements UserDetails {
 
     @Column(name = "apellido")
     private String apellido;
+    
+    @Column(name = "telefono")
+    private String telefono;
 
     @Column(name = "direccion")
     private String direccion;
@@ -59,6 +62,13 @@ public class Cliente implements UserDetails {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public Set<Venta> getVentas() {

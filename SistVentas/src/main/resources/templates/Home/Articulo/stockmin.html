@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Informe Ventas</title>
+    <title>Stock minimo</title>
     <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -115,40 +115,31 @@
     </ul>
   </div>
 </nav>
-<div class="container">
-  <h2>Detalles del Vendedor</h2>
+    <div class="container">
+        <h4 class="mt-4">Editar Artículo</h4>
 
-  <div th:if="${vendedor != null}">
-    <dl class="row">
-      <dt class="col-sm-3">Nombre:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.nombre}"></dd>
+        <!-- Formulario para editar un artículo existente -->
+        <form th:action="@{/articulos/editarMin/{idE}(idE=${articulo.id})}" th:object="${articulo}" method="post">
+            <!-- Resto del formulario -->
 
-      <dt class="col-sm-3">Apellido:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.apellido}"></dd>
+            <input type="hidden" th:field="*{id}" />
 
-      <dt class="col-sm-3">Telefono:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.telefono}"></dd>
+            <div class="form-group col-md-4">
+                <label for="stockM">Stock Mínimo</label>
+                <input type="number" class="form-control" id="stockM" th:field="*{stock_min}"
+                    placeholder="Stock mínimo del artículo" required min="1">
+            </div>
 
-      <dt class="col-sm-3">Direccion:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.direccion}"></dd>
+            <button type="submit" class="btn btn-primary"
+            onclick="return confirm('¿Estás seguro de que quieres cambiar el stock mínimo?')">Guardar Cambios</button>
+        </form>
+    </div>
 
-      <dt class="col-sm-3">Correo Electrónico:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.mail}"></dd>
-    </dl>
-  </div>
-
-  <div th:if="${vendedor == null}">
-    <p class="text-danger">ID del vendedor no existente.</p>
-  </div>
-
-  <a th:href="@{/vendedor/listado}" class="btn btn-primary">Volver al Listado</a>
-</div>
-
-
-<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

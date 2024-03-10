@@ -1,146 +1,253 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Nuevo Artículo</title>
-    <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-        /* Puedes agregar estilos personalizados aquí si es necesario */
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            background-color: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .card {
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Nuevo articulo</title>
+  <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 30px;
+      margin-top: 50px;
+    }
+
+    .navbar {
+      background-color: #343a40;
+      border-radius: 0;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .navbar-toggler-icon {
+      background-color: #ffffff;
+    }
+
+    .navbar-nav {
+      margin-left: auto;
+    }
+
+    .nav-item {
+      margin-right: 20px;
+    }
+
+    .nav-link {
+      color: #ffffff;
+    }
+
+    .nav-link:hover {
+      color: #f8f9fa;
+    }
+
+    h2 {
+      color: #007bff;
+    }
+
+    .text-danger {
+      color: #dc3545;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .navbar-nav a,
+    .btn-primary {
+      transition: color 0.3s ease;
+    }
+  </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Nombre</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <!-- Este bloque se mostrará solo si navbarIndicator es verdadero -->
-            <li th:if="${navbarIndicator}" class="nav-item active" style="position: relative;">
-                <a class="nav-link" href="/articulos/new">Artículos</a>
-                <div style="position: absolute; top: 50%; right: 0; transform: translate(0, -50%); background-color: red; width: 5px; height: 5px; border-radius: 50%;">
-                </div>
-            </li>
+<a class="navbar-brand" href="/home">SistVentas</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="/proveedor/listado">Proveedores</a>
+  </li>
+    <!-- Este bloque se mostrará solo si navbarIndicator es verdadero -->
+    <li th:if="${navbarIndicator}" class="nav-item " style="position: relative;">
+      <a class="nav-link" href="/articulos/new">Artículos</a>
+      <div style="position: absolute; top: 50%; right: 0; transform: translate(0, -50%); background-color: red; width: 5px; height: 5px; border-radius: 50%;">
+      </div>
+    </li>
 
-            <!-- Este bloque se mostrará solo si navbarIndicator es falso -->
-            <li th:unless="${navbarIndicator}" class="nav-item active">
-                <a class="nav-link" href="/articulos/new">Artículos</a>
-            </li>
+    <!-- Este bloque se mostrará solo si navbarIndicator es falso -->
+    <li th:unless="${navbarIndicator}" class="nav-item">
+      <a class="nav-link" href="/articulos/new">Artículos</a>
+    </li>
 
 
-            <li class="nav-item">
-                <a class="nav-link" href="/vendedor/listado">Vendedores</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/clientes/new">Clientes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/ventaArticulo/new">Ventas</a>
-            </li>
-        </ul>
-    </div>
+    <li class="nav-item">
+      <a class="nav-link" href="/vendedor/listado">Vendedores</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/clientes/new">Clientes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/venta/new">Ventas</a>
+    <li class="nav-item">
+      <a class="nav-link" href="/ventaArticulo/infoVentas">Info Ventas</a>
+    </li>
+  </ul>
+</div>
 </nav>
-<div class="container">
-    <h4 class="mt-4">Nuevo Artículo</h4>
+  <div class="container">
+    <h4 class="mt-4">Nuevo artículo</h4>
 
     <!-- Formulario para crear un nuevo artículo -->
     <form th:action="@{/articulos}" th:object="${art}" method="post">
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" th:field="*{nombre}" placeholder="Nombre del artículo" required>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="precio">Precio</label>
-                <input type="number" class="form-control" id="precio" th:field="*{precio}" placeholder="Precio del artículo" required>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="stock">Stock</label>
-                <input type="number" class="form-control" id="stock" th:field="*{stock}" placeholder="Stock del artículo" required>
-            </div>
-
-            <div class="form-group col-md-4">
-                <label for="stockM">Stock Minimo</label>
-                <input type="number" class="form-control" id="stockM" th:field="*{stock_min}" placeholder="Stock minimo del artículo" required>
-            </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" id="nombre" th:field="*{nombre}" placeholder="Nombre del artículo"
+            required>
         </div>
-        <button type="submit" class="btn btn-primary">Crear</button>
+        <div class="form-group col-md-4">
+          <label for="precio">Precio</label>
+          <input type="number" class="form-control" id="precio" th:field="*{precio}" placeholder="Precio del artículo"
+            required min="1">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="stock">Stock</label>
+          <input type="number" class="form-control" id="stock" th:field="*{stock}" placeholder="Stock del artículo"
+            required min="1">
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="stockM">Stock Mínimo</label>
+          <input type="number" class="form-control" id="stockM" th:field="*{stock_min}"
+            placeholder="Stock mínimo del artículo" required min="1">
+        </div>
+
+        <!-- Agrega el campo de fecha de ingreso -->
+        <div class="form-group col-md-4">
+          <label for="fechaIngreso">Fecha de Ingreso</label>
+          <input type="date" class="form-control" id="fechaIngreso" th:field="*{fechaIngreso}" required>
+        </div>
+
+
+        <div class="form-group col-md-4">
+          <label for="proveedor">Proveedor</label>
+          <select class="form-control" id="proveedor" name="proveedor" required>
+            <option value="" disabled selected>Seleccione proveedor</option>
+            <option th:each="proveedor : ${listaProveedores}" th:value="${proveedor.id}"
+              th:text="${proveedor.nombreEmpresa}"></option>
+          </select>
+        </div>
+
+
+      </div>
+      <button type="submit" class="btn btn-primary">Crear</button>
     </form>
 
 
     <!-- Tabla para mostrar la lista de artículos -->
     <div class="card">
-        <!-- Agrega esto en tu página HTML para mostrar el mensaje de error en amarillo -->
-        <div th:if="${errorlimitestock}" style="background-color: yellow; padding: 10px;">
-            <p>Hay artículos con stock por debajo del límite. Por favor, revisa los siguientes artículos:</p>
-            <div th:each="articulo : ${listaArticulos}" th:if="${articulo.stock <= articulo.stock_min}" style="display: inline-block; margin-right: 10px;">
-                <span th:text="${articulo.nombre}"></span>
-            </div>
+      <!-- Agrega esto en tu página HTML para mostrar el mensaje de error en amarillo -->
+      <div th:if="${errorlimitestock}" style="background-color: yellow; padding: 10px;">
+        <p>Hay artículos con stock por debajo del límite. Por favor, revisa los siguientes artículos:</p>
+        <div th:each="articulo : ${listaArticulos}" th:if="${articulo.stock <= articulo.stock_min}"
+          style="display: inline-block; margin-right: 10px;">
+          <span th:text="${articulo.nombre}"></span>
         </div>
+      </div>
 
-        <div class="card-header">
-            <h5>Lista de Artículos</h5>
-        </div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                    <th>Stock Minimo permitido</th>
-                    <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="articulo : ${listaArticulos}">
-                    <td th:text="${articulo.nombre}"></td>
-                    <td th:text="${articulo.precio}"></td>
-                    <td th:text="${articulo.stock}"></td>
-                    <td th:text="${articulo.stock_min}"></td>
-                    <td>
-                        <button class="btn btn-info btn-sm" data-toggle="collapse" th:data-target="'#detallesExtras' + ${articulo.id}">Detalles</button>
-                        <a th:href="@{'/articulos/eliminar/' + ${articulo.id}}" class="btn btn-danger btn-sm ">Eliminar</a>
-                        <a th:href="@{'/articulos/editar/' + ${articulo.id}}" class="btn btn-warning btn-sm">Editar</a>
-                    </td>
-                </tr>
-
-                </tbody>
-
-            </table>
-            <div th:each="articulo : ${listaArticulos}" th:id="'detallesExtras' + ${articulo.id}" class="collapse">
-                <p><strong>Nombre:</strong> <span th:text="${articulo.nombre}"></span></p>
-                <p><strong>Precio:</strong> <span th:text="${articulo.precio}"></span></p>
-                <p><strong>Stock:</strong> <span th:text="${articulo.stock}"></span></p>
-                <p><strong>Stock minimo:</strong> <span th:text="${articulo.stock_min}"></span></p>
-                <!-- Agrega más detalles según sea necesario -->
-            </div>
-        </div>
+      <div class="card-header">
+        <h5>Lista de Artículos</h5>
+      </div>
+      <div class="card-body">
+        <table class="table" id="tablaArticulos">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Stock Min</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="articulo : ${listaArticulos}">
+              <td th:text="${articulo.nombre}"></td>
+              <td th:text="${articulo.precio}"></td>
+              <td th:text="${articulo.stock}"></td>
+              <td th:text="${articulo.stock_min}"></td>
+              <td>
+                <a th:href="@{'/articulos/detalle/' + ${articulo.id}}" class="btn btn-primary btn-sm">Info</a>
+                <a th:href="@{'/articulos/editar/' + ${articulo.id}}" class="btn btn-success btn-sm">Actualizar</a>
+                <a th:href="@{'/articulos/eliminar/' + ${articulo.id}}" class="btn btn-danger btn-sm "
+                  onclick="return confirm('¿Estás seguro de que quieres eliminar este artículo?')">Eliminar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-</div>
+
+    <!-- Script para formatear los precios -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Obtén todas las celdas de la columna de precio
+        var precioCells = document.querySelectorAll('#tablaArticulos tbody tr td:nth-child(2)');
+
+        // Itera sobre las celdas y formatea los números
+        precioCells.forEach(function (cell) {
+          var precio = parseFloat(cell.textContent);
+
+          // Formatea el número con 2 decimales
+          cell.textContent = precio.toFixed(2);
+        });
+      });
+    </script>
+    <!-- Script para formatear los precios -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Obtén todas las celdas de la columna de precio
+        var precioCells = document.querySelectorAll('#tablaArticulos tbody tr td:nth-child(2)');
+
+        // Itera sobre las celdas y formatea los números con el símbolo de dólar
+        precioCells.forEach(function (cell) {
+          var precio = parseFloat(cell.textContent);
+
+          // Formatea el número con 2 decimales y agrega el símbolo de dólar
+          cell.textContent = '$' + precio.toFixed(2);
+        });
+      });
+    </script>
 
 
 
-<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

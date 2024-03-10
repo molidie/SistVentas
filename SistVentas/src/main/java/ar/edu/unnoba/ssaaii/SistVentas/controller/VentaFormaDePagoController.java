@@ -33,14 +33,15 @@ public class VentaFormaDePagoController {
 
     private final List<VentaFormaPago> ventaFormaPagos = new ArrayList<>();
 
-    public VentaFormaDePagoController(IVentaFormaDePagoService ventaFormaDePagoService, IFormaDePagoService formaDePagoService, IVentaService ventaService) {
+    public VentaFormaDePagoController(IVentaFormaDePagoService ventaFormaDePagoService,
+            IFormaDePagoService formaDePagoService, IVentaService ventaService) {
         this.ventaFormaDePagoService = ventaFormaDePagoService;
         this.formaDePagoService = formaDePagoService;
         this.ventaService = ventaService;
     }
 
     @GetMapping("/new/{id}")
-    public String formaDePago(Model model, @PathVariable Long id){
+    public String formaDePago(Model model, @PathVariable Long id) {
         VentaFormaPago ventaFormaPago = new VentaFormaPago();
         Venta venta = ventaService.busquedaPorId(id);
         model.addAttribute("ventaFormaDePago", ventaFormaPago);
@@ -51,7 +52,7 @@ public class VentaFormaDePagoController {
     }
 
     @PostMapping("/new/{idP}")
-    public String nuevaVentaFormaDePago(@PathVariable Long idP, Model model, VentaFormaPago ventaFormaPago){
+    public String nuevaVentaFormaDePago(@PathVariable Long idP, Model model, VentaFormaPago ventaFormaPago) {
         Venta venta = ventaService.busquedaPorId(idP);
         float montoVenta = 0f;
 
@@ -65,8 +66,6 @@ public class VentaFormaDePagoController {
         model.addAttribute("ventaFormaDePago", ventaFormaPago);
         model.addAttribute("formasDePago", formaDePagoService.getAll());
 
-
-
         float valorCuotas = montoVenta / ventaFormaPago.getCuotas();
         model.addAttribute("valorCuotas", valorCuotas);
 
@@ -79,43 +78,46 @@ public class VentaFormaDePagoController {
 
         float valorFinal = montoConInteres * 1.21f;
 
-
-        if (Objects.equals(ventaFormaPago.getFormaDePago().getTipo(), "EFECTIVO")){
-            valorFinal = (montoVenta)-((montoVenta * (ventaFormaPago.getDescuento()/100) ));
-            valorFinal= valorFinal*1.21f;
-            model.addAttribute("descuento",ventaFormaPago.getDescuento() );
-
+        if (Objects.equals(ventaFormaPago.getFormaDePago().getTipo(), "EFECTIVO")) {
+            valorFinal = (montoVenta) - ((montoVenta * (ventaFormaPago.getDescuento() / 100)));
+            valorFinal = valorFinal * 1.21f;
+            model.addAttribute("descuento", ventaFormaPago.getDescuento());
         }
-        model.addAttribute("valorfinal",valorFinal);
+
+        model.addAttribute("valorfinal", valorFinal);
         ventaFormaPago.setMonto(valorFinal);
         ventaFormaPago.setVenta(venta);
         ventaFormaPagos.add(ventaFormaPago);
-        return "/Home/VentaFormaDePago/new";
+        return "redirect:/ventaFormaDePago/new/" + idP; // Redirecciona al formulario de forma de pago
     }
 
     @GetMapping("/guardar/{idP}")
-    public String guardarVentaFormaDePago(@PathVariable Long idP){
-        int index =  ventaFormaPagos.size();
-        ventaFormaDePagoService.create(ventaFormaPagos.get(index-1));
-        Long id = ventaFormaPagos.get(index-1).getId();
+    public String guardarVentaFormaDePago(@PathVariable Long idP) {
+        int index = ventaFormaPagos.size();
+        ventaFormaDePagoService.create(ventaFormaPagos.get(index - 1));
+        Long id = ventaFormaPagos.get(index - 1).getId();
         ventaFormaPagos.clear();
-        return "redirect:/ventaFormaDePago/nota/" +idP +"/" + id;
+        return "redirect:/ventaFormaDePago/nota/" + idP + "/" + id;
     }
 
     @GetMapping("/nota/{idV}/{idN}")
-    public String notaDeCompra(@PathVariable Long idV,@PathVariable Long idN,Model model){
+    public String notaDeCompra(@PathVariable Long idV, @PathVariable Long idN, Model model) {
         Venta venta = ventaService.busquedaPorId(idV);
-       VentaFormaPago ventaFormaPago =  ventaFormaDePagoService.busquedaPorId(idN);
+        VentaFormaPago ventaFormaPago = ventaFormaDePagoService.busquedaPorId(idN);
         float montoVenta = 0f;
-
+    
+        // Calcular el valor por unidad de los objetos de la venta
+        List<Float> valoresPorUnidad = new ArrayList<>();
         for (VentaArticulo vA : venta.getVentaArticulos()) {
             if (Objects.equals(vA.getVenta().getId(), venta.getId())) {
                 montoVenta += vA.getMonto();
+                float valorPorUnidad = vA.getMonto() / vA.getCantidad();
+                valoresPorUnidad.add(valorPorUnidad);
             }
         }
         model.addAttribute("ventasDeArticulos", venta.getVentaArticulos());
-        model.addAttribute("cliente", venta.getCliente().getNombre());
-        model.addAttribute("Vendedor", venta.getVendedor().getNombre());
+        model.addAttribute("cliente", venta.getCliente().getNombre() + " " + venta.getCliente().getApellido());
+        model.addAttribute("Vendedor", venta.getVendedor().getNombre()+ " " + venta.getVendedor().getApellido());
         model.addAttribute("codigoDeVenta", venta.getId());
         model.addAttribute("montoTotalVenta", montoVenta);
         model.addAttribute("cuotas", ventaFormaPago.getCuotas());
@@ -123,8 +125,10 @@ public class VentaFormaDePagoController {
         model.addAttribute("Descuento", ventaFormaPago.getDescuento());
         model.addAttribute("Total", ventaFormaPago.getMonto());
         model.addAttribute("tipoFormaDePago", ventaFormaPago.getFormaDePago().getTipo());
+        model.addAttribute("fechaEmision", venta.getFecha());
+        model.addAttribute("valoresPorUnidad", valoresPorUnidad);
+
         return "/Home/VentaFormaDePago/nota";
     }
-
 
 }

@@ -20,50 +20,52 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.text.DecimalFormat;
 
 @Controller
-@RequestMapping("/ventaArticulo") //con este creamos la venta
+@RequestMapping("/ventaArticulo") // con este creamos la venta
 public class VentaArticuloController {
     @Autowired
     private IVentaArticuloService ventaArticuloService;
     @Autowired
     private IVentaService ventaService;
     @Autowired
-    private  IArticuloService articuloService;
+    private IArticuloService articuloService;
 
-    public VentaArticuloController(IVentaArticuloService ventaArticuloService, IVentaService ventaService, IArticuloService articuloService) {
+    public VentaArticuloController(IVentaArticuloService ventaArticuloService, IVentaService ventaService,
+            IArticuloService articuloService) {
         this.ventaArticuloService = ventaArticuloService;
         this.ventaService = ventaService;
         this.articuloService = articuloService;
     }
 
     @GetMapping("/new/{id}")
-    public String nuevo(@PathVariable Long id,Model model){
+    public String nuevo(@PathVariable Long id, Model model) {
         VentaArticulo ventaArticulo = new VentaArticulo();
         float montoT = 0f;
         Venta venta = ventaService.busquedaPorId(id);
         model.addAttribute("ventaArticulo", ventaArticulo);
         model.addAttribute("venta", venta);
-        model.addAttribute("articulos",articuloService.getAll());
+        model.addAttribute("articulos", articuloService.getAll());
         model.addAttribute("articulosVendidos", venta.getVentaArticulos());
         for (VentaArticulo vA : venta.getVentaArticulos()) {
             montoT += vA.getMonto();
         }
-        model.addAttribute("montoTotalVentaArticulo",montoT);
+        model.addAttribute("montoTotalVentaArticulo", montoT);
 
         return "/Home/VentaAticulo/new";
     }
 
     @PostMapping("/new/{idE}")
-    public String crear(@PathVariable Long idE , Model model,VentaArticulo ventaArticulo){
-        model.addAttribute("ventaDeArticulo",ventaArticulo);
+    public String crear(@PathVariable Long idE, Model model, VentaArticulo ventaArticulo) {
+        model.addAttribute("ventaDeArticulo", ventaArticulo);
         Venta venta = ventaService.busquedaPorId(idE);
-        model.addAttribute("venta",venta);
+        model.addAttribute("venta", venta);
         ventaArticulo.setVenta(venta);
         float montoT = 0f;
         try {
             Articulo articulo = articuloService.busquedaPorId(ventaArticulo.getArticulo().getId());
-            model.addAttribute("articulos",articulo);
+            model.addAttribute("articulos", articulo);
             if (ventaArticulo.getArticulo() != null) {
                 float monto = articulo.getPrecio() * ventaArticulo.getCantidad();
                 ventaArticulo.setMonto(monto);
@@ -85,19 +87,18 @@ public class VentaArticuloController {
         for (VentaArticulo vA : venta.getVentaArticulos()) {
             montoT += vA.getMonto();
         }
-        model.addAttribute("montoTotalVentaArticulo",montoT);
-        return "redirect:/ventaArticulo/new/" +idE;
+        model.addAttribute("montoTotalVentaArticulo", montoT);
+        return "redirect:/ventaArticulo/new/" + idE;
     }
 
-
     @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id){
+    public String eliminar(@PathVariable Long id) {
         VentaArticulo ventaArticulo = ventaArticuloService.busquedaPorId(id);
         Long idV = ventaArticulo.getVenta().getId();
         Articulo articulo = ventaArticulo.getArticulo();
         articulo.setStock(articulo.getStock() + ventaArticulo.getCantidad());
         ventaArticuloService.delete(id);
-        return "redirect:/ventaArticulo/new/" +idV;
+        return "redirect:/ventaArticulo/new/" + idV;
     }
 
     @GetMapping("/cancelar/{idV}")
@@ -105,10 +106,9 @@ public class VentaArticuloController {
         return "redirect:/venta/new";
     }
 
-
     @GetMapping("/infoVentas")
-    public String infoVentas(Model model){
-        model.addAttribute("tabla",ventaArticuloService.obtenerMontoYPorcentajePorMes());
+    public String infoVentas(Model model) {
+        model.addAttribute("tabla", ventaArticuloService.obtenerMontoYPorcentajePorMes());
         String[] meses = new DateFormatSymbols(new Locale("es")).getMonths();
         model.addAttribute("meses", meses);
         return "/Home/VentaAticulo/informeDeVentas";
@@ -116,4 +116,3 @@ public class VentaArticuloController {
     }
 
 }
-

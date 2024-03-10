@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Date;
 import java.util.Collection;
 import java.util.Set;
 
@@ -29,12 +30,32 @@ public class Articulo implements UserDetails {
     @Column(name = "stock_min")
     @JsonIgnore
     private int stock_min;
+    
+    @Column(name = "fecha_ingreso")
+    private Date fechaIngreso;
+
+    @ManyToOne
+    @JoinColumn(name = "proveedor_id")
+    @JsonIgnore
+    private Proveedor proveedor;
+
+    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Proveedor> proveedores;
 
     @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<VentaArticulo> ventaArticulos;
 
     public Articulo() {
+    }
+
+    public Set<Proveedor> getProveedores() {
+        return proveedores;
+    }
+
+    public void setProveedores(Set<Proveedor> proveedores) {
+        this.proveedores = proveedores;
     }
 
     public Set<VentaArticulo> getVentaArticulos() {
@@ -118,5 +139,21 @@ public class Articulo implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public Date getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
     }
 }

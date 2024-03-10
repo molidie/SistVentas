@@ -115,40 +115,73 @@
     </ul>
   </div>
 </nav>
-<div class="container">
-  <h2>Detalles del Vendedor</h2>
-
-  <div th:if="${vendedor != null}">
-    <dl class="row">
-      <dt class="col-sm-3">Nombre:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.nombre}"></dd>
-
-      <dt class="col-sm-3">Apellido:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.apellido}"></dd>
-
-      <dt class="col-sm-3">Telefono:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.telefono}"></dd>
-
-      <dt class="col-sm-3">Direccion:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.direccion}"></dd>
-
-      <dt class="col-sm-3">Correo Electrónico:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.mail}"></dd>
-    </dl>
+  <div class="container">
+    <div class="card">
+      <div class="card-header bg-dark text-white ">
+        <h5 class="mb-0 text-center">Nuevo proveedor</h5>
+      </div>
+      <div class="card-body">
+        <div th:if="${errorMessage != null}" class="alert alert-danger mt-3" role="alert">
+          <p th:text="${errorMessage}"></p>
+        </div>
+        <form th:action="@{/proveedor}" th:object="${proveedor}" method="post">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre Empresa</label>
+                <input type="text" class="form-control" th:field="*{nombreEmpresa}"
+                  placeholder="Ingrese nombre de la empresa" required>
+              </div>
+              <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <input type="text" class="form-control" th:field="*{direccion}"
+                  placeholder="Ingrese dirección de la empresa" required>
+              </div>
+              <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono de contacto</label>
+                <input type="tel" class="form-control" th:field="*{telefono}" placeholder="Ingrese número de teléfono"
+                  required>
+                <small id="telefonoHelp" class="form-text text-muted">Ingrese el número de teléfono con el formato
+                  correcto.</small>
+              </div>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre de contacto</label>
+                <input type="text" class="form-control" th:field="*{nombreContacto}"
+                  placeholder="Ingrese nombre del contacto" required>
+              </div>
+              <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido de contacto</label>
+                <input type="text" class="form-control" th:field="*{apellidoContacto}"
+                  placeholder="Ingrese apellido del contacto" required>
+              </div>
+              <div class="mb-3">
+                <label for="mail" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" th:field="*{mail}" placeholder="Ingrese correo electrónico"
+                  required>
+              </div>
+              <div class="mb-3">
+                <label for="rubro" class="form-label">Rubro</label>
+                <input type="text" class="form-control" th:field="*{rubro}" placeholder="¿A qué rubro pertenece?"
+                  required>
+              </div>
+            </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
   </div>
 
-  <div th:if="${vendedor == null}">
-    <p class="text-danger">ID del vendedor no existente.</p>
-  </div>
-
-  <a th:href="@{/vendedor/listado}" class="btn btn-primary">Volver al Listado</a>
-</div>
-
-
-<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+  <!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+
 </html>

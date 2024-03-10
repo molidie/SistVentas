@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Informe Ventas</title>
+    <title>Comentarios Proveedor</title>
     <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -115,40 +115,34 @@
     </ul>
   </div>
 </nav>
-<div class="container">
-  <h2>Detalles del Vendedor</h2>
-
-  <div th:if="${vendedor != null}">
-    <dl class="row">
-      <dt class="col-sm-3">Nombre:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.nombre}"></dd>
-
-      <dt class="col-sm-3">Apellido:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.apellido}"></dd>
-
-      <dt class="col-sm-3">Telefono:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.telefono}"></dd>
-
-      <dt class="col-sm-3">Direccion:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.direccion}"></dd>
-
-      <dt class="col-sm-3">Correo Electrónico:</dt>
-      <dd class="col-sm-9" th:text="${vendedor.mail}"></dd>
-    </dl>
-  </div>
-
-  <div th:if="${vendedor == null}">
-    <p class="text-danger">ID del vendedor no existente.</p>
-  </div>
-
-  <a th:href="@{/vendedor/listado}" class="btn btn-primary">Volver al Listado</a>
-</div>
-
-
-<!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <div class="container mx-auto mb-0 text-center"> <!-- Agrega la clase mx-auto aquí -->
+        <div class="card-header">
+            <h4 class="mb-0 text-center bold">Comentarios sobre <span th:text="${proveedor.nombreEmpresa+' y '+proveedor.nombreContacto+' '+proveedor.apellidoContacto}" style="color: blue;"></span></h4>
+        </div>
+        <!-- Formulario para editar un artículo existente -->
+        <form th:action="@{/proveedor/comentariosProveedor/{idE}(idE=${proveedor.id})}" th:object="${proveedor}"
+            method="post">
+            <input type="hidden" th:field="*{id}" />
+            <div class="row">
+                <div class="col-md-12 " >
+                    <div class="mb-3">
+                        <label for="comentarios" class="form-label"></label>
+                        <textarea name="textarea" rows="5" th:field="*{comentarios}" class="form-control"
+                            id="comentarios" placeholder="Comentarios sobre la empresa y/o contacto"></textarea>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
+    <!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">

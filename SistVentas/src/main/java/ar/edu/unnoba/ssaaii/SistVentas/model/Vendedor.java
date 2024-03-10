@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Date;
 import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name = "vendedores")
-public class Vendedor implements UserDetails{
+public class Vendedor implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,7 +22,16 @@ public class Vendedor implements UserDetails{
     private String apellido;
 
     @Column(name = "mail")
-    private String mail;
+    private String mail;    
+
+    @Column(name = "telefono")
+    private String telefono;
+
+     @Column(name = "fecha_contratacion")
+    private Date fechaContratacion;
+
+    @Column(name = "direccion")
+    private String direccion;
 
     @Column(name = "contraseña")
     private String contraseña;
@@ -34,6 +44,22 @@ public class Vendedor implements UserDetails{
 
     public Long getId() {
         return id;
+    }
+    
+    public Date getFechaContratacion() {
+        return fechaContratacion;
+    }
+
+    public void setFechaContratacion(Date fechaContratacion) {
+        this.fechaContratacion = fechaContratacion;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public void setId(Long id) {
@@ -78,6 +104,13 @@ public class Vendedor implements UserDetails{
 
     public void setVentas(Set<Venta> ventas) {
         this.ventas = ventas;
+    }
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     @Override
