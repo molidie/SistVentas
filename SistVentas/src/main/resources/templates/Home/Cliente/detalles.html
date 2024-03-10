@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Registrar nuevo cliente</title>
+  <title>Informe Ventas</title>
   <!-- Agrega las referencias a los archivos de Bootstrap desde un CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -119,81 +119,22 @@
       </ul>
     </div>
   </nav>
+
+
   <div class="container">
-    <h4 class="mt-2">Registrar un nuevo cliente</h4>
-
-    <!-- Formulario para crear un nuevo artículo -->
-    <form th:action="@{/clientes}" th:object="${cliente}" method="post">
-      <div class="form-row">
-        <div class="form-group col-md-3">
-          <label for="nombre">Nombre</label>
-          <input type="text" class="form-control" id="nombre" th:field="*{nombre}" placeholder="Nombre del cliente"
-            required>
-        </div>
-        <div class="form-group col-md-3">
-          <label for="apellido">Apellido</label>
-          <input type="text" class="form-control" id="apellido" th:field="*{apellido}"
-            placeholder="Apellido del cliente" required>
-        </div>
-        <div class="form-group col-md-3">
-          <label for="direccion">Direccion</label>
-          <input type="text" class="form-control" id="direccion" th:field="*{direccion}"
-            placeholder="Direccion del cliente" required>
-        </div>
-        <div class="mb-3 col-md-3">
-          <label for="telefono" class="form-label col-md-3">Teléfono</label>
-          <input type="tel" class="form-control" th:field="*{telefono}" placeholder="Ingrese número de teléfono"
-            required>
-
-        </div>
-
-
-      </div>
-      <br>
-      <button type="submit" class="btn btn-primary ">Crear</button>
-
-    </form>
-
-
-    <!-- Tabla para mostrar la lista de artículos -->
-    <div class="card mt-2">
-      <div class="card-header">
-        <h5>Lista de Clientes</h5>
-      </div>
-      <div class="card-body">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Direccion</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="cliente : ${listaclientes}">
-              <td th:text="${cliente.nombre}"></td>
-              <td th:text="${cliente.apellido}"></td>
-              <td th:text="${cliente.direccion}"></td>
-              <td>
-                <a th:href="@{'/clientes/detalles/'+ ${cliente.id}}"
-                                    class="btn btn-info btn-sm">Detalles</a>
-                <a th:href="@{'/clientes/editar/' + ${cliente.id}}" class="btn btn-primary btn-sm">Modificar datos</a>
-                <a th:href="@{'/clientes/eliminar/' + ${cliente.id}}" class="btn btn-danger btn-sm"
-                  onclick="return confirm('¿Estás seguro de que quieres eliminar al cliente?')">Eliminar</a>
-
-
-              </td>
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
+    <h4 class="mt-4">Detalles de: <span th:text="${cliente.nombre+ ' '+cliente.apellido}" style="color: blue;"></span>
+    </h4>
+    <div>
+      <p><strong>Nombre: </strong> <span th:text="${cliente.nombre}"></span></p>
+      <p><strong>Apellido: </strong> <span th:text="${cliente.apellido}"></span></p>
+      <p><strong>Telefono: </strong> <span th:text="${cliente.telefono}"></span></p>
+      <p><strong>Direccion: </strong> <span th:text="${cliente.direccion}"></span></p>
     </div>
+    <div th:if="${cliente == null}">
+      <p class="text-danger">ID del vendedor no existente.</p>
+    </div>
+    <a th:href="@{/clientes/new}" class="btn btn-primary">Volver al Listado</a>
   </div>
-
 
 
   <!-- Agrega las referencias a los archivos de Bootstrap JavaScript y jQuery desde un CDN al final del cuerpo del documento -->

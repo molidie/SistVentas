@@ -32,6 +32,13 @@ public class ClienteController {
     }
 
 
+    @GetMapping("/detalles/{id}")
+    public String detalles(@PathVariable Long id,Model model){
+        model.addAttribute("cliente",clienteService.busquedaPorId(id));
+        return "/Home/Cliente/detalles";
+    }
+
+
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id){
         clienteService.delete(id);
